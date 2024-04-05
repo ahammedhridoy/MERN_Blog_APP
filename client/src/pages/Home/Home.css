@@ -1,0 +1,14 @@
+.home-page {
+  padding: 10px;
+}
+.main-content {
+  display: flex;
+  gap: 2%;
+}
+.main-left {
+  flex-basis: 75%;
+}
+.main-right {
+  flex-basis: 23%;
+}
+

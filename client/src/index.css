@@ -8,15 +8,23 @@
   box-sizing: border-box;
 }
 
+html,
 body {
   font-family: "Poppins", sans-serif;
   font-style: normal;
   background-color: var(--body-color);
+  max-width: 100%;
+  overflow-x: hidden;
 }
 .container {
-  max-width: 1440px;
-  margin: 0 auto;
-  margin-top: 80px;
+  max-width: 1260px !important;
+  margin: 50px auto !important;
+}
+button,
+select,
+textarea,
+input {
+  outline: none;
 }
 
 :root {
@@ -26,8 +34,80 @@ body {
   --text-color: #2a2d2e;
   --other-text-color: #676767;
   --color-white: #fff;
+  --color-dark: #0a0d1f;
 }
 
+.btn {
+  background-color: var(--primary-color);
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: var(--color-white);
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+.btn:hover {
+  background-color: var(--hover-color);
+}
+
+input {
+  height: 3rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: transparent;
+  border: 1px solid #ccc;
+  width: 100%;
+  margin: 10px 0;
+}
+
+textarea {
+  width: 100%;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: transparent;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+.badge {
+  background-color: var(--primary-color);
+  width: fit-content;
+  padding-left: 0.563rem;
+  padding-right: 0.563rem;
+  border-radius: 1.9rem;
+  border-width: 1px;
+  color: var(--color-white);
+  height: 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  cursor: pointer;
+}
+.badge:hover {
+  background-color: var(--hover-color);
+  transition: all 0.5s linear;
+}
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  color: var(--other-text-color);
+  font-size: 14px;
+}
+.link {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+.link:hover {
+  color: var(--hover-color);
+  text-decoration: underline;
+}
 /* Media Query */
 
 /* Large Device */
@@ -48,10 +128,35 @@ body {
   .menu-icon {
     display: flex;
   }
+  .about-wrap {
+    gap: 20px !important;
+    flex-direction: column !important;
+  }
+  .latest-post-card {
+    flex-direction: column;
+  }
+  .main-right {
+    display: none;
+  }
+  .main-left {
+    flex-basis: 100% !important;
+  }
 }
 
 /* Mobile */
 @media all and (max-width: 430px) {
+  .contact-wrap {
+    width: 80% !important;
+  }
+  .latest-post-container {
+    flex-direction: column;
+    gap: 20px;
+    align-items: normal !important;
+  }
+  .latest-post-author,
+  .latest-post-likes-comments {
+    justify-content: space-between !important;
+  }
 }
 
 /* Media Query */

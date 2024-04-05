@@ -1,0 +1,70 @@
+.post-card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  background-color: var(--color-white);
+  width: 100%;
+  border-radius: 5px;
+}
+.post-card img {
+  border-radius: 5px 5px 0 0;
+}
+
+.post-card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.post-container {
+  padding: 2px 16px;
+}
+
+.post-cat {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  padding: 10px 15px;
+}
+.author-info {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.author-info img {
+  width: 30px;
+  border-radius: 50%;
+}
+.post-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+.post-title {
+  padding: 10px 15px;
+}
+.post-desc {
+  padding: 10px 15px;
+}
+.like {
+  font-size: 24px;
+  cursor: pointer;
+}
+.dislike {
+  font-size: 24px;
+  cursor: pointer;
+}
+.post-likes {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.post-comments {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.post-details {
+  margin: 20px 0;
+  padding: 0 15px;
+  display: flex;
+  justify-content: space-between;
+}

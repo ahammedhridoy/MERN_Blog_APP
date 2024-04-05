@@ -1,0 +1,14 @@
+.contact img {
+  width: 100%;
+  object-fit: cover;
+  max-height: 400px;
+}
+.contact-wrap {
+  width: 500px;
+}
+.title {
+  text-align: center;
+}
+.submit {
+  width: 100%;
+}

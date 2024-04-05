@@ -1,0 +1,20 @@
+.error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.error p {
+  margin-bottom: 20px;
+}
+._404 {
+  font-size: 100px;
+  color: var(--hover-color);
+  font-weight: 600;
+}
+.error-text {
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--text-color);
+}

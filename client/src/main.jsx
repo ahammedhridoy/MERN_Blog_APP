@@ -4,7 +4,6 @@ import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./component/Layout/Layout.jsx";
-import Error from "./pages/Error";
 import Home from "./pages/Home/Home.jsx";
 import About from "./pages/About/About";
 import AddPost from "./pages/AddPost/AddPost";
@@ -14,12 +13,13 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import SingleBlog from "./pages/SingleBlog/SingleBlog";
 import Profile from "./pages/Profile/Profile.jsx";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    errorElement: <Error />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,

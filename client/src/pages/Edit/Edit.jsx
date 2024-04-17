@@ -1,8 +1,7 @@
-import "./AddPost.css";
 import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-const AddPost = () => {
+const Edit = () => {
   const [value, setValue] = useState("");
 
   const modules = {
@@ -36,8 +35,8 @@ const AddPost = () => {
   ];
 
   return (
-    <div className="add-post">
-      <h1>Add Post</h1>
+    <div className="add-post" style={{ padding: "20px", margin: "100px 0" }}>
+      <h1>Edit Post</h1>
       <form>
         <input type="text" placeholder="Title" />
         <div className="input-file">
@@ -64,11 +63,11 @@ const AddPost = () => {
           onChange={setValue}
         />
         <button className="btn" style={{ marginTop: "20px" }}>
-          Publish
+          Update
         </button>
       </form>
     </div>
   );
 };
 
-export default AddPost;
+export default Edit;

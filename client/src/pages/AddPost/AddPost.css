@@ -1,0 +1,14 @@
+.add-post {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.add-post-img {
+  width: 500px;
+}
+.quill {
+  overflow-y: scroll;
+  height: 200px;
+  max-width: 100%;
+}

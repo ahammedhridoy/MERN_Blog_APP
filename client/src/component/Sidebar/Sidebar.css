@@ -5,3 +5,42 @@
   border-radius: 5px;
   padding: 20px;
 }
+
+.facebook {
+  padding: 10px;
+  background-color: #4c63a2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--color-white);
+  margin-bottom: 15px;
+}
+.facebook svg {
+  font-size: 25px;
+}
+
+.twitter {
+  padding: 10px;
+  background-color: #69c9ff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--color-white);
+  margin-bottom: 15px;
+}
+.twitter svg {
+  font-size: 25px;
+}
+
+.youtube {
+  padding: 10px;
+  background-color: #c41713;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--color-white);
+  margin-bottom: 15px;
+}
+.youtube svg {
+  font-size: 25px;
+}

@@ -1,0 +1,71 @@
+.single-blog-wrap {
+  display: flex;
+  gap: 2%;
+}
+.single-left {
+  flex-basis: 65%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background-color: var(--color-white);
+  width: 100%;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 50px auto;
+  height: fit-content;
+}
+.single-right {
+  flex-basis: 33%;
+}
+.single-img {
+  max-width: 100%;
+  object-fit: cover;
+}
+.post-desc p {
+  color: var(--other-text-color);
+  font-size: 14px;
+}
+.comments-section {
+  margin: 20px 0;
+}
+.comment {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.comment img {
+  width: 50px;
+  object-fit: cover;
+  height: 50px;
+}
+.comment-details p {
+  color: var(--other-text-color);
+  font-size: 14px;
+  margin-top: 25px;
+}
+
+.reply {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+  padding-left: 55px;
+}
+.reply img {
+  width: 50px;
+  object-fit: cover;
+  height: 50px;
+}
+
+.reply-details p {
+  color: var(--other-text-color);
+  font-size: 14px;
+  margin-top: 25px;
+}
+.post-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.edit-delete {
+  display: flex;
+  gap: 10px;
+}

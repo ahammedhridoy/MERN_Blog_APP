@@ -6,9 +6,8 @@
   gap: 2%;
 }
 .main-left {
-  flex-basis: 75%;
+  flex-basis: 65%;
 }
 .main-right {
-  flex-basis: 23%;
+  flex-basis: 33%;
 }
-

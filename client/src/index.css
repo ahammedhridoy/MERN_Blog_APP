@@ -26,6 +26,36 @@ textarea,
 input {
   outline: none;
 }
+select {
+  height: 3rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: transparent;
+  border: 1px solid #ccc;
+  width: 100%;
+  margin: 10px 0;
+}
+.input-file {
+  height: 3rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: transparent;
+  border: 1px solid #ccc;
+  width: 100%;
+  margin: 10px 0;
+}
+.input-file .file {
+  border: none;
+  padding: 0;
+}
 
 :root {
   --body-color: #eff2fc;
@@ -49,7 +79,24 @@ input {
 .btn:hover {
   background-color: var(--hover-color);
 }
-
+.btn-delete {
+  background-color: red;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: var(--color-white);
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+.btn-delete:hover {
+  background-color: rgb(204, 30, 30);
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: var(--color-white);
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
 input {
   height: 3rem;
   padding-left: 1rem;
@@ -73,6 +120,9 @@ textarea {
   padding: 10px;
   font-size: 1rem;
   line-height: 1.5rem;
+}
+.mb {
+  margin-bottom: 15px;
 }
 .badge {
   background-color: var(--primary-color);
@@ -135,10 +185,18 @@ textarea {
   .latest-post-card {
     flex-direction: column;
   }
-  .main-right {
+  .main-right,
+  .blogs-right {
     display: none;
   }
-  .main-left {
+  .main-left,
+  .blogs-left {
+    flex-basis: 100% !important;
+  }
+  .single-right {
+    display: none;
+  }
+  .single-left {
     flex-basis: 100% !important;
   }
 }
@@ -156,6 +214,16 @@ textarea {
   .latest-post-author,
   .latest-post-likes-comments {
     justify-content: space-between !important;
+  }
+  .pop-wrap {
+    flex-direction: column;
+  }
+  .blogs-left-posts {
+    grid-template-columns: auto !important;
+  }
+  .my-posts-item-wrap {
+    flex-direction: column;
+    gap: 20px;
   }
 }
 

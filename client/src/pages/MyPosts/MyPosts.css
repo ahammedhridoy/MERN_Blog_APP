@@ -1,0 +1,24 @@
+.post-item-img {
+  width: 50px;
+  height: 40px;
+}
+.my-posts-item-wrap {
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background-color: var(--color-white);
+  width: 100%;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
+.post-item-left {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.post-item-right {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}

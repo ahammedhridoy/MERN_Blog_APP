@@ -3,6 +3,7 @@ require("dotenv").config();
 const cors = require("cors");
 const { userRouter } = require("./routes/userRoutes");
 const { connectDB } = require("./helper/database");
+const { postRouter } = require("./routes/postRoutes");
 
 const app = express();
 app.use(express.json());
@@ -21,3 +22,4 @@ connectDB();
 
 //Routes
 app.use("/api", userRouter);
+app.use("/api", postRouter);

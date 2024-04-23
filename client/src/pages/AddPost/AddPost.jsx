@@ -1,9 +1,19 @@
 import "./AddPost.css";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 const AddPost = () => {
   const [value, setValue] = useState("");
+  const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!currentUser) {
+      navigate("/login");
+    }
+  }, []);
 
   const modules = {
     toolbar: [

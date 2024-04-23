@@ -13,7 +13,8 @@ const postSchema = new mongoose.Schema(
     },
     thumbnail: {
       type: String,
-      default: "kfsd.jpg",
+      default:
+        "https://cdn.pixabay.com/photo/2024/04/01/14/58/sierra-del-torcal-8669125_1280.jpg",
     },
     category: {
       type: [String],

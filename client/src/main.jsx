@@ -18,12 +18,13 @@ import DashboardLayout from "./component/Layout/DashboardLayout.jsx";
 import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import AddPost from "./pages/AddPost/AddPost.jsx";
 import Edit from "./pages/Edit/Edit.jsx";
+import { AuthContextProvider } from "./context/AuthContext.jsx";
+import { GlobalContextProvider } from "./context/GlobalContext.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -54,12 +55,16 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: "/blogs/:id",
+        path: "/post/:id",
         element: <SingleBlog />,
       },
       {
         path: "/edit",
         element: <Edit />,
+      },
+      {
+        path: "*",
+        element: <ErrorPage />,
       },
     ],
   },
@@ -84,12 +89,20 @@ const router = createBrowserRouter([
         path: "/profile",
         element: <Profile />,
       },
+      {
+        path: "*",
+        element: <ErrorPage />,
+      },
     ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthContextProvider>
+      <GlobalContextProvider>
+        <RouterProvider router={router} />
+      </GlobalContextProvider>
+    </AuthContextProvider>
   </React.StrictMode>
 );

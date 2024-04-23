@@ -1,7 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./MyPosts.css";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 const MyPosts = () => {
+  const { currentUser } = useContext(AuthContext);
+  // const token = currentUser?.token;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!currentUser) {
+      navigate("/login");
+    }
+  }, []);
   return (
     <div
       className="my-posts-page"

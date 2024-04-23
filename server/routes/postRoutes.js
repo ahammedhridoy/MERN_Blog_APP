@@ -10,10 +10,16 @@ const {
   deletePost,
 } = require("../controllers/postController");
 const { authMiddleware } = require("../middleware/authMiddleware");
+const { upload } = require("../helper/multer");
 
 const postRouter = express.Router();
 
-postRouter.post("/post/create", authMiddleware, createPost);
+postRouter.post(
+  "/post/create",
+  authMiddleware,
+  upload.single("thumbnail"),
+  createPost
+);
 postRouter.post("/post/thumbnail", authMiddleware, uploadThumbnail);
 postRouter.get("/post/all", getAllPosts);
 postRouter.get("/post/single/:id", getSinglePost);

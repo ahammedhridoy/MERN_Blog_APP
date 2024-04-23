@@ -1,6 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Profile.css";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../../context/AuthContext";
 const Profile = () => {
+  const { currentUser } = useContext(AuthContext);
+  // const token = currentUser?.token;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!currentUser) {
+      navigate("/login");
+    }
+  }, []);
   return (
     <div className="profile" style={{ marginTop: "100px" }}>
       <div className="container profile-container">

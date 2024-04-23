@@ -6,12 +6,26 @@ import { IoMdClose } from "react-icons/io";
 import { FaFacebookSquare } from "react-icons/fa";
 import { FaTwitterSquare } from "react-icons/fa";
 import { FaSquareInstagram } from "react-icons/fa6";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { toast, ToastContainer } from "react-toastify";
 
 const Header = () => {
   const [active, setActive] = useState(false);
+  const { currentUser } = useContext(AuthContext);
+
+  // Logout
+  const handleLogout = () => {
+    localStorage.clear();
+    toast.success("Logout Successful");
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  };
+
   return (
     <div className="header">
+      <ToastContainer />
       <div className="">
         <div className="navigation">
           {/* Logo */}
@@ -31,27 +45,37 @@ const Header = () => {
               <li>
                 <Link to="/about">About</Link>
               </li>
-              <li>
-                <Link to="/add-post">Add Post</Link>
-              </li>
+              {currentUser && (
+                <li>
+                  <Link to="/add-post">Add Post</Link>
+                </li>
+              )}
               <li>
                 <Link to="/contact">Contact</Link>
               </li>
               <li>
                 <Link to="/blogs">Blogs</Link>
               </li>
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-              <li>
-                <Link to="/register">Register</Link>
-              </li>
-              <li>
-                <Link to="/profile">Profile</Link>
-              </li>
-              <li>
-                <Link to="/">Logout</Link>
-              </li>
+              {!currentUser && (
+                <>
+                  <li>
+                    <Link to="/login">Login</Link>
+                  </li>
+                  <li>
+                    <Link to="/register">Register</Link>
+                  </li>
+                </>
+              )}
+              {currentUser && (
+                <>
+                  <li>
+                    <Link to="/profile">Profile</Link>
+                  </li>
+                  <li>
+                    <Link onClick={handleLogout}>Logout</Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
           {/* Menu */}
@@ -83,27 +107,37 @@ const Header = () => {
                 <li>
                   <Link to="/about">About</Link>
                 </li>
-                <li>
-                  <Link to="/add-post">Add Post</Link>
-                </li>
+                {currentUser && (
+                  <li>
+                    <Link to="/add-post">Add Post</Link>
+                  </li>
+                )}
                 <li>
                   <Link to="/contact">Contact</Link>
                 </li>
                 <li>
                   <Link to="/blogs">Blogs</Link>
                 </li>
-                <li>
-                  <Link to="/login">Login</Link>
-                </li>
-                <li>
-                  <Link to="/register">Register</Link>
-                </li>
-                <li>
-                  <Link to="/profile">Profile</Link>
-                </li>
-                <li>
-                  <Link to="/">Logout</Link>
-                </li>
+                {!currentUser && (
+                  <>
+                    <li>
+                      <Link to="/login">Login</Link>
+                    </li>
+                    <li>
+                      <Link to="/register">Register</Link>
+                    </li>
+                  </>
+                )}
+                {currentUser && (
+                  <>
+                    <li>
+                      <Link to="/profile">Profile</Link>
+                    </li>
+                    <li>
+                      <Link to="/">Logout</Link>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
 

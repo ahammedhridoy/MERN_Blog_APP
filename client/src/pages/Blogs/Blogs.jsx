@@ -1,8 +1,23 @@
+import { useContext, useState } from "react";
 import Post from "../../component/Post/Post";
 import Sidebar from "../../component/Sidebar/Sidebar";
 import "./Blogs.css";
+import { GlobalContext } from "../../context/GlobalContext";
+import Loading from "../../component/Loading/Loading";
 
 const Blogs = () => {
+  const { posts, loading } = useContext(GlobalContext);
+  const [visiblePosts, setVisiblePosts] = useState(10);
+
+  // useEffect(() => {
+  //   fetchPosts();
+  // }, []);
+
+  // Function to load more posts
+  const loadMorePosts = () => {
+    setVisiblePosts((prevVisiblePosts) => prevVisiblePosts + 10);
+  };
+
   return (
     <div className="blogs">
       <img
@@ -13,21 +28,24 @@ const Blogs = () => {
 
       <div style={{ padding: "0 20px" }}>
         <div className="blogs-content">
-          <div className="blogs-left">
-            <div className="blogs-left-posts">
-              <Post />
-              <Post />
-              <Post />
-              <Post />
-              <Post />
-              <Post />
-              <Post />
-              <Post />
+          {loading ? (
+            <Loading />
+          ) : (
+            <div className="blogs-left">
+              <div className="blogs-left-posts">
+                {posts.slice(0, visiblePosts).map((post) => (
+                  <Post key={post._id} post={post} />
+                ))}
+              </div>
+              <div className="load-more">
+                {visiblePosts < posts.length && (
+                  <button className="btn" onClick={loadMorePosts}>
+                    Load More
+                  </button>
+                )}
+              </div>
             </div>
-            <div className="load-more">
-              <button className="btn ">Load More</button>
-            </div>
-          </div>
+          )}
           <div className="blogs-right">
             <Sidebar />
           </div>

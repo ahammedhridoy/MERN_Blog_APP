@@ -18,6 +18,8 @@
 .single-img {
   max-width: 100%;
   object-fit: cover;
+  margin: auto;
+  display: block;
 }
 .post-desc p {
   color: var(--other-text-color);

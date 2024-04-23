@@ -55,7 +55,16 @@ const userLogin = async (req, res) => {
         expiresIn: "25d",
       }
     );
-    res.status(200).json({ message: "Login successful", user, token });
+
+    // Exclude password field from user object
+    const { password: userPassword, ...userDataWithoutPassword } =
+      user.toObject();
+
+    res.status(200).json({
+      message: "Login successful",
+      user: userDataWithoutPassword,
+      token,
+    });
   } catch (error) {
     console.log(error);
   }

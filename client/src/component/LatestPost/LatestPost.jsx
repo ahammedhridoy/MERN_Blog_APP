@@ -2,8 +2,28 @@ import { Link } from "react-router-dom";
 import "./LatestPost.css";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { LiaCommentSolid } from "react-icons/lia";
+import { useContext, useState } from "react";
+import { GlobalContext } from "../../context/GlobalContext";
+import Loading from "../Loading/Loading";
 
 const LatestPost = () => {
+  const { posts, loading } = useContext(GlobalContext);
+  const [visiblePosts, setVisiblePosts] = useState(5);
+
+  // useEffect(() => {
+  //   fetchPosts();
+  // }, []);
+
+  // Function to format date
+  const formatDate = (dateString) => {
+    const [datePart] = dateString.split("T");
+    return datePart;
+  };
+
+  // Function to load more posts
+  const loadMorePosts = () => {
+    setVisiblePosts((prevVisiblePosts) => prevVisiblePosts + 5);
+  };
   return (
     <div className="latest-post-wrap">
       <div className="container">
@@ -11,334 +31,73 @@ const LatestPost = () => {
         <div className="latest-title">Latest Posts</div>
 
         {/* Posts */}
-        <div className="latest-post-card">
-          <div className="latest-post-left">
-            <img
-              className="latest-post-img"
-              src="https://cdn.pixabay.com/photo/2024/04/01/14/58/sierra-del-torcal-8669125_1280.jpg"
-              alt=""
-            />
-            <div className="latest-post-cat">
-              <div className="badge">Education</div>
-              <div className="badge">Technology</div>
-            </div>
-          </div>
-
-          <div className="latest-post-details">
-            <div className="latest-post-title">
-              <Link to={"/post"} className="link">
-                <h4>A Discount Toner Cartridge Is Better Than Ever.</h4>
-              </Link>
-            </div>
-            <div className="latest-post-container">
-              <div className="latest-post-author">
-                <div className="latest-author-info">
+        {loading ? (
+          <Loading />
+        ) : (
+          <div>
+            {posts.slice(0, visiblePosts).map((post) => (
+              <div className="latest-post-card" key={post._id}>
+                <div className="latest-post-left">
                   <img
-                    src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
+                    className="latest-post-img"
+                    src={`http://localhost:3000/uploads/${post?.thumbnail}`}
                     alt=""
                   />
-                  <h4>
-                    <b>John Doe</b>
-                  </h4>
+                  <div className="latest-post-cat">
+                    {post?.category?.map((c) => (
+                      <div className="badge" key={c}>
+                        {c || "Uncategorized"}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <p>1 April, 2024</p>
-              </div>
-              <div className="latest-post-likes-comments">
-                <div className="latest-post-likes">
-                  <FcLikePlaceholder className="latest-like" />
-                  {/* <FcLike className="like" /> */}
-                  <span>100</span>
-                </div>
-                <div className="latest-post-comments">
-                  <LiaCommentSolid className="latest-dislike" />
-                  <span>100</span>
-                </div>
-              </div>
-            </div>
-            <div className="latest-post-desc">
-              <p className="truncate">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Quisquam quaerat quod, quibusdam quod quaerat quaerat quaerat
-                quaerat quaerat quaerat quaerat quaerat quaerat quaerat quaerat
-                quaerat quaerat{" "}
-              </p>
-            </div>
-          </div>
-        </div>
 
-        <div className="latest-post-card">
-          <div className="latest-post-left">
-            <img
-              className="latest-post-img"
-              src="https://cdn.pixabay.com/photo/2024/04/01/14/58/sierra-del-torcal-8669125_1280.jpg"
-              alt=""
-            />
-            <div className="latest-post-cat">
-              <div className="badge">Education</div>
-              <div className="badge">Technology</div>
-            </div>
+                <div className="latest-post-details">
+                  <div className="latest-post-title">
+                    <Link to={`/post/${post?._id}`} className="link">
+                      <h4>{post?.title}</h4>
+                    </Link>
+                  </div>
+                  <div className="latest-post-container">
+                    <div className="latest-post-author">
+                      <div className="latest-author-info">
+                        <img
+                          src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
+                          alt=""
+                        />
+                        <h4>
+                          <b>{post?.author?.username}</b>
+                        </h4>
+                      </div>
+                      <p>{formatDate(post.updatedAt)}</p>
+                    </div>
+                    <div className="latest-post-likes-comments">
+                      <div className="latest-post-likes">
+                        <FcLikePlaceholder className="latest-like" />
+                        {/* <FcLike className="like" /> */}
+                        <span>{post?.like?.length || 0}</span>
+                      </div>
+                      <div className="latest-post-comments">
+                        <LiaCommentSolid className="latest-dislike" />
+                        <span>{post?.comments?.length || 0}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="latest-post-desc">
+                    <p className="truncate">{post?.description}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
+        )}
 
-          <div className="latest-post-details">
-            <div className="latest-post-title">
-              <Link to={"/post"} className="link">
-                <h4>A Discount Toner Cartridge Is Better Than Ever.</h4>
-              </Link>
-            </div>
-            <div className="latest-post-container">
-              <div className="latest-post-author">
-                <div className="latest-author-info">
-                  <img
-                    src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
-                    alt=""
-                  />
-                  <h4>
-                    <b>John Doe</b>
-                  </h4>
-                </div>
-                <p>1 April, 2024</p>
-              </div>
-              <div className="latest-post-likes-comments">
-                <div className="latest-post-likes">
-                  <FcLikePlaceholder className="latest-like" />
-                  {/* <FcLike className="like" /> */}
-                  <span>100</span>
-                </div>
-                <div className="latest-post-comments">
-                  <LiaCommentSolid className="latest-dislike" />
-                  <span>100</span>
-                </div>
-              </div>
-            </div>
-            <div className="latest-post-desc">
-              <p className="truncate">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Quisquam quaerat quod, quibusdam quod quaerat quaerat quaerat
-                quaerat quaerat quaerat quaerat quaerat quaerat quaerat quaerat
-                quaerat quaerat{" "}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="latest-post-card">
-          <div className="latest-post-left">
-            <img
-              className="latest-post-img"
-              src="https://cdn.pixabay.com/photo/2024/04/01/14/58/sierra-del-torcal-8669125_1280.jpg"
-              alt=""
-            />
-            <div className="latest-post-cat">
-              <div className="badge">Education</div>
-              <div className="badge">Technology</div>
-            </div>
-          </div>
-
-          <div className="latest-post-details">
-            <div className="latest-post-title">
-              <Link to={"/post"} className="link">
-                <h4>A Discount Toner Cartridge Is Better Than Ever.</h4>
-              </Link>
-            </div>
-            <div className="latest-post-container">
-              <div className="latest-post-author">
-                <div className="latest-author-info">
-                  <img
-                    src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
-                    alt=""
-                  />
-                  <h4>
-                    <b>John Doe</b>
-                  </h4>
-                </div>
-                <p>1 April, 2024</p>
-              </div>
-              <div className="latest-post-likes-comments">
-                <div className="latest-post-likes">
-                  <FcLikePlaceholder className="latest-like" />
-                  {/* <FcLike className="like" /> */}
-                  <span>100</span>
-                </div>
-                <div className="latest-post-comments">
-                  <LiaCommentSolid className="latest-dislike" />
-                  <span>100</span>
-                </div>
-              </div>
-            </div>
-            <div className="latest-post-desc">
-              <p className="truncate">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Quisquam quaerat quod, quibusdam quod quaerat quaerat quaerat
-                quaerat quaerat quaerat quaerat quaerat quaerat quaerat quaerat
-                quaerat quaerat{" "}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="latest-post-card">
-          <div className="latest-post-left">
-            <img
-              className="latest-post-img"
-              src="https://cdn.pixabay.com/photo/2024/04/01/14/58/sierra-del-torcal-8669125_1280.jpg"
-              alt=""
-            />
-            <div className="latest-post-cat">
-              <div className="badge">Education</div>
-              <div className="badge">Technology</div>
-            </div>
-          </div>
-
-          <div className="latest-post-details">
-            <div className="latest-post-title">
-              <Link to={"/post"} className="link">
-                <h4>A Discount Toner Cartridge Is Better Than Ever.</h4>
-              </Link>
-            </div>
-            <div className="latest-post-container">
-              <div className="latest-post-author">
-                <div className="latest-author-info">
-                  <img
-                    src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
-                    alt=""
-                  />
-                  <h4>
-                    <b>John Doe</b>
-                  </h4>
-                </div>
-                <p>1 April, 2024</p>
-              </div>
-              <div className="latest-post-likes-comments">
-                <div className="latest-post-likes">
-                  <FcLikePlaceholder className="latest-like" />
-                  {/* <FcLike className="like" /> */}
-                  <span>100</span>
-                </div>
-                <div className="latest-post-comments">
-                  <LiaCommentSolid className="latest-dislike" />
-                  <span>100</span>
-                </div>
-              </div>
-            </div>
-            <div className="latest-post-desc">
-              <p className="truncate">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Quisquam quaerat quod, quibusdam quod quaerat quaerat quaerat
-                quaerat quaerat quaerat quaerat quaerat quaerat quaerat quaerat
-                quaerat quaerat{" "}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="latest-post-card">
-          <div className="latest-post-left">
-            <img
-              className="latest-post-img"
-              src="https://cdn.pixabay.com/photo/2024/04/01/14/58/sierra-del-torcal-8669125_1280.jpg"
-              alt=""
-            />
-            <div className="latest-post-cat">
-              <div className="badge">Education</div>
-              <div className="badge">Technology</div>
-            </div>
-          </div>
-
-          <div className="latest-post-details">
-            <div className="latest-post-title">
-              <Link to={"/post"} className="link">
-                <h4>A Discount Toner Cartridge Is Better Than Ever.</h4>
-              </Link>
-            </div>
-            <div className="latest-post-container">
-              <div className="latest-post-author">
-                <div className="latest-author-info">
-                  <img
-                    src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
-                    alt=""
-                  />
-                  <h4>
-                    <b>John Doe</b>
-                  </h4>
-                </div>
-                <p>1 April, 2024</p>
-              </div>
-              <div className="latest-post-likes-comments">
-                <div className="latest-post-likes">
-                  <FcLikePlaceholder className="latest-like" />
-                  {/* <FcLike className="like" /> */}
-                  <span>100</span>
-                </div>
-                <div className="latest-post-comments">
-                  <LiaCommentSolid className="latest-dislike" />
-                  <span>100</span>
-                </div>
-              </div>
-            </div>
-            <div className="latest-post-desc">
-              <p className="truncate">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Quisquam quaerat quod, quibusdam quod quaerat quaerat quaerat
-                quaerat quaerat quaerat quaerat quaerat quaerat quaerat quaerat
-                quaerat quaerat{" "}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="latest-post-card">
-          <div className="latest-post-left">
-            <img
-              className="latest-post-img"
-              src="https://cdn.pixabay.com/photo/2024/04/01/14/58/sierra-del-torcal-8669125_1280.jpg"
-              alt=""
-            />
-            <div className="latest-post-cat">
-              <div className="badge">Education</div>
-              <div className="badge">Technology</div>
-            </div>
-          </div>
-
-          <div className="latest-post-details">
-            <div className="latest-post-title">
-              <Link to={"/post"} className="link">
-                <h4>A Discount Toner Cartridge Is Better Than Ever.</h4>
-              </Link>
-            </div>
-            <div className="latest-post-container">
-              <div className="latest-post-author">
-                <div className="latest-author-info">
-                  <img
-                    src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
-                    alt=""
-                  />
-                  <h4>
-                    <b>John Doe</b>
-                  </h4>
-                </div>
-                <p>1 April, 2024</p>
-              </div>
-              <div className="latest-post-likes-comments">
-                <div className="latest-post-likes">
-                  <FcLikePlaceholder className="latest-like" />
-                  {/* <FcLike className="like" /> */}
-                  <span>100</span>
-                </div>
-                <div className="latest-post-comments">
-                  <LiaCommentSolid className="latest-dislike" />
-                  <span>100</span>
-                </div>
-              </div>
-            </div>
-            <div className="latest-post-desc">
-              <p className="truncate">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Quisquam quaerat quod, quibusdam quod quaerat quaerat quaerat
-                quaerat quaerat quaerat quaerat quaerat quaerat quaerat quaerat
-                quaerat quaerat{" "}
-              </p>
-            </div>
-          </div>
+        <div style={{ textAlign: "center", marginTop: "20px" }}>
+          {visiblePosts < posts.length && (
+            <button className="btn" onClick={loadMorePosts}>
+              Load More
+            </button>
+          )}
         </div>
       </div>
     </div>

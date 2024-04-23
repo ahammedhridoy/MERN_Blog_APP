@@ -169,6 +169,9 @@ textarea {
 
 /* Tablet */
 @media all and (max-width: 820px) {
+  .pop-wrap {
+    grid-template-columns: repeat(1, minmax(200px, 1fr)) !important;
+  }
   .menu-icon {
     display: none;
   }
@@ -184,6 +187,7 @@ textarea {
   }
   .latest-post-card {
     flex-direction: column;
+    align-items: start !important;
   }
   .main-right,
   .blogs-right {

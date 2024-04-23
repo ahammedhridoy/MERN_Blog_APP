@@ -61,7 +61,7 @@ const getAllPosts = async (req, res) => {
     if (!posts) {
       return res.status(404).json({ message: "No posts found" });
     }
-    res.status(200).json({ message: "All posts", posts });
+    res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
@@ -76,7 +76,7 @@ const getSinglePost = async (req, res) => {
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
-    res.status(200).json({ message: "Post found", post });
+    res.status(200).json(post);
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
@@ -150,23 +150,6 @@ const editPost = async (req, res) => {
 };
 
 // Delete Post
-// const deletePost = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const authorId = req.user.id;
-//     const post = await postModel.findById(id);
-//     if (!post) {
-//       return res.status(404).json({ message: "Post not found" });
-//     }
-//     if (post?.author.toString() !== authorId) {
-//       return res.status(401).json({ message: "Unauthorized" });
-//     }
-//     await postModel.findByIdAndDelete(id);
-//     res.status(200).json({ message: "Post deleted successfully" });
-//   } catch (error) {
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// };
 
 const deletePost = async (req, res) => {
   try {
@@ -189,7 +172,7 @@ const deletePost = async (req, res) => {
 
     // Remove the post ID from the user's posts array
     await userModel.findByIdAndUpdate(authorId, { $pull: { posts: id } });
-
+    Y67;
     res.status(200).json({ message: "Post deleted successfully", post });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });

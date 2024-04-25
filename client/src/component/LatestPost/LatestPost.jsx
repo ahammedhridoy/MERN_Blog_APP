@@ -44,11 +44,9 @@ const LatestPost = () => {
                     alt=""
                   />
                   <div className="latest-post-cat">
-                    {post?.category?.map((c) => (
-                      <div className="badge" key={c}>
-                        {c || "Uncategorized"}
-                      </div>
-                    ))}
+                    <Link to={`/category/${post?.category}`} className="link">
+                      <div className="badge">{post?.category}</div>
+                    </Link>
                   </div>
                 </div>
 
@@ -84,7 +82,10 @@ const LatestPost = () => {
                     </div>
                   </div>
                   <div className="latest-post-desc">
-                    <p className="truncate">{post?.description}</p>
+                    <p
+                      className="truncate"
+                      dangerouslySetInnerHTML={{ __html: post?.description }}
+                    ></p>
                   </div>
                 </div>
               </div>

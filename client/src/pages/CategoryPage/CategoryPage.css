@@ -13,12 +13,6 @@
   border-radius: 5px;
   margin: 100px 0;
 }
-.blogs-left {
-  flex-basis: 65%;
-}
-.blogs-right {
-  flex-basis: 33%;
-}
 .blogs-left-posts {
   margin: 50px auto;
   display: grid;

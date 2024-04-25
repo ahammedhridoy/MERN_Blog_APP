@@ -1,22 +1,23 @@
 import "./SingleBlog.css";
 import Sidebar from "./../../component/Sidebar/Sidebar";
-import { Link, useLocation, useParams } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../context/GlobalContext";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import Loading from "../../component/Loading/Loading";
+import Relavent from "../../component/Relavent/Relavent";
 
 const SingleBlog = () => {
   const BASE_URL = "http://localhost:3000/api";
-  const { setSinglePost, singlePost, loading, setLoading } =
-    useContext(GlobalContext);
+  const { setSinglePost, singlePost } = useContext(GlobalContext);
   const { id } = useParams();
   const imageUrl = `http://localhost:3000/uploads/${singlePost.thumbnail}`;
   const { currentUser } = useContext(AuthContext);
   const userId = currentUser?._id;
-  const location = useLocation();
-  const postUrl = `http://localhost:5173${location?.pathname}`;
+  // const location = useLocation();
+  // const postUrl = `http://localhost:5173${location?.pathname}`;
+  const [loading, setLoading] = useState(true);
 
   // Single post
 
@@ -24,14 +25,13 @@ const SingleBlog = () => {
     const fetchSinglePost = async () => {
       try {
         const { data } = await axios.get(`${BASE_URL}/post/single/${id}`);
-        setSinglePost(data);
+        await setSinglePost(data);
       } catch (error) {
         console.error("Error fetching posts:", error);
       } finally {
         setLoading(false);
       }
     };
-
     fetchSinglePost();
   }, []);
 
@@ -64,11 +64,15 @@ const SingleBlog = () => {
 
               <div className="single-post-details">
                 <div className="post-cat">
-                  {singlePost?.category?.map((c) => (
-                    <div className="badge" key={c}>
-                      {c || "Uncategorized"}
-                    </div>
-                  ))}
+                  <div className="badge">
+                    <Link
+                      to={`/category/${singlePost?.category}`}
+                      className="link"
+                      style={{ color: "white" }}
+                    >
+                      {singlePost?.category}
+                    </Link>
+                  </div>
                 </div>
                 <div className="post-container">
                   <div className="author-info">
@@ -92,7 +96,11 @@ const SingleBlog = () => {
                 </div>
 
                 <div className="post-desc">
-                  <p>{singlePost?.description}</p>
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: singlePost?.description,
+                    }}
+                  ></p>
                 </div>
               </div>
 
@@ -250,10 +258,12 @@ const SingleBlog = () => {
             </>
           )}
         </div>
+
         <div className="single-right">
           <Sidebar />
         </div>
       </div>
+      <Relavent id={id} />
     </div>
   );
 };

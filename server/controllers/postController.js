@@ -57,7 +57,7 @@ const getAllPosts = async (req, res) => {
     const posts = await postModel
       .find({})
       .sort({ updatedAt: -1 })
-      .populate("author");
+      .populate([{ path: "author" }, { path: "category" }]);
     if (!posts) {
       return res.status(404).json({ message: "No posts found" });
     }
@@ -72,7 +72,9 @@ const getAllPosts = async (req, res) => {
 const getSinglePost = async (req, res) => {
   try {
     const { id } = req.params;
-    const post = await postModel.findById(id).populate("author");
+    const post = await postModel
+      .findById(id)
+      .populate([{ path: "author" }, { path: "category" }]);
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
@@ -87,15 +89,18 @@ const getSinglePost = async (req, res) => {
 const getCategoryPost = async (req, res) => {
   try {
     const { category } = req.params;
-    const post = await postModel
+    const posts = await postModel
       .find({ category })
-      .sort({ createdAt: -1 })
+      .sort({ updatedAt: -1 })
       .populate("author");
-    if (!post) {
-      return res.status(404).json({ message: "Post not found" });
+    if (posts.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No posts found for this category" });
     }
-    res.status(200).json({ message: "Post found", post });
+    res.status(200).json(posts);
   } catch (error) {
+    console.error("Error fetching category posts:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };

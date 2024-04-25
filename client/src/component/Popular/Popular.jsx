@@ -45,11 +45,9 @@ const Popular = () => {
                     alt=""
                   />
                   <div className="popular-post-cat">
-                    {post?.category?.map((c) => (
-                      <div className="badge" key={c}>
-                        {c || "Uncategorized"}
-                      </div>
-                    ))}
+                    <Link to={`/category/${post?.category}`} className="link">
+                      <div className="badge">{post?.category}</div>
+                    </Link>
                   </div>
                 </div>
 
@@ -85,9 +83,10 @@ const Popular = () => {
                     </div>
                   </div>
                   <div className="popular-post-desc">
-                    <p className="truncate">
-                      <p className="truncate">{post?.description}</p>
-                    </p>
+                    <p
+                      className="truncate"
+                      dangerouslySetInnerHTML={{ __html: post?.description }}
+                    ></p>
                   </div>
                 </div>
               </div>

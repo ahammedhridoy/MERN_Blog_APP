@@ -1,0 +1,12 @@
+.category-container {
+  margin-top: 50px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  background-color: var(--color-white);
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}

@@ -5,6 +5,7 @@ const { userRouter } = require("./routes/userRoutes");
 const { connectDB } = require("./helper/database");
 const { postRouter } = require("./routes/postRoutes");
 const path = require("path");
+const { categoryRouter } = require("./routes/categoryRoutes");
 
 const app = express();
 app.use(express.json());
@@ -27,3 +28,4 @@ connectDB();
 //Routes
 app.use("/api", userRouter);
 app.use("/api", postRouter);
+app.use("/api", categoryRouter);

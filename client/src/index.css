@@ -169,6 +169,9 @@ textarea {
 
 /* Tablet */
 @media all and (max-width: 820px) {
+  .relavent-post {
+    grid-template-columns: repeat(1, minmax(200px, 1fr)) !important;
+  }
   .pop-wrap {
     grid-template-columns: repeat(1, minmax(200px, 1fr)) !important;
   }
@@ -207,6 +210,9 @@ textarea {
 
 /* Mobile */
 @media all and (max-width: 430px) {
+  .relavent-post {
+    grid-template-columns: repeat(1, minmax(200px, 1fr)) !important;
+  }
   .contact-wrap {
     width: 80% !important;
   }

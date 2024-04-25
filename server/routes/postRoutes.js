@@ -8,6 +8,7 @@ const {
   getAuthorPost,
   editPost,
   deletePost,
+  getCategory,
 } = require("../controllers/postController");
 const { authMiddleware } = require("../middleware/authMiddleware");
 const { upload } = require("../helper/multer");

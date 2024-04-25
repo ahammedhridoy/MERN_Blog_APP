@@ -32,14 +32,15 @@ const Post = ({ post }) => {
             </Link>
           </div>
           <div className="post-desc">
-            <p className="truncate">{description}</p>
+            <p
+              className="truncate"
+              dangerouslySetInnerHTML={{ __html: description }}
+            ></p>
           </div>
           <div className="post-cat">
-            {category?.map((c) => (
-              <div className="badge" key={c}>
-                {c || "Uncategorized"}
-              </div>
-            ))}
+            <Link to={`/category/${category}`} className="link">
+              <div className="badge">{category}</div>
+            </Link>
           </div>
           <div className="post-container">
             <div className="author-info">

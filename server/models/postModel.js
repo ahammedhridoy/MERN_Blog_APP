@@ -17,7 +17,15 @@ const postSchema = new mongoose.Schema(
         "https://cdn.pixabay.com/photo/2024/04/01/14/58/sierra-del-torcal-8669125_1280.jpg",
     },
     category: {
-      type: [String],
+      type: String,
+      enum: [
+        "education",
+        "entertainment",
+        "health",
+        "science",
+        "sports",
+        "technology",
+      ],
     },
     like: {
       type: Number,

@@ -40,6 +40,7 @@ const SingleBlog = () => {
 
   const deletePost = async () => {
     try {
+      console.log("token", token);
       const { data } = await axios.delete(`${BASE_URL}/post/delete/${id}`, {
         withCredentials: true,
         headers: { Authorization: `Bearer ${token}` },

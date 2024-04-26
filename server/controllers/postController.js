@@ -6,7 +6,7 @@ const userModel = require("../models/userModel");
 const createPost = async (req, res, next) => {
   try {
     const { title, description, category } = req.body;
-    const thumbnail = req.file?.filename;
+    const thumbnail = req.file?.name;
     if (!title || !description || !category) {
       return res.status(400).json({ message: "Please fill all the fields" });
     }
@@ -166,9 +166,8 @@ const deletePost = async (req, res) => {
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
-
     // Check if the user is authorized to delete the post
-    if (post.author.toString() !== authorId) {
+    if (post?.author.toString() !== authorId) {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
@@ -177,7 +176,6 @@ const deletePost = async (req, res) => {
 
     // Remove the post ID from the user's posts array
     await userModel.findByIdAndUpdate(authorId, { $pull: { posts: id } });
-    Y67;
     res.status(200).json({ message: "Post deleted successfully", post });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });

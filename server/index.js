@@ -9,7 +9,13 @@ const { categoryRouter } = require("./routes/categoryRoutes");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:5173",
+  credentials: true,
+  optionSuccessStatus: 200,
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+app.use(cors(corsOptions));
 
 // Serve static files from the 'server/uploads' folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

@@ -4,10 +4,36 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 const AddPost = () => {
-  const [value, setValue] = useState("");
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [title, setTitle] = useState("");
+  const [thumbnail, setThumbnail] = useState("");
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
+  const BASE_URL = "http://localhost:3000/api";
+  console.log(title, thumbnail, category, description);
+
+  // create post
+  const createPost = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post(`${BASE_URL}/post/create`, {
+        title,
+        thumbnail,
+        category,
+        description,
+      });
+      if (data?.status === 200) {
+        toast.success("Post created successfully");
+        // navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     if (!currentUser) {
@@ -48,17 +74,28 @@ const AddPost = () => {
   return (
     <div className="add-post">
       <h1>Add Post</h1>
-      <form>
-        <input type="text" placeholder="Title" />
-        <div className="input-file">
-          <input className="file" type="file" accept="image/*" />
-        </div>
-        <img
-          src="https://cdn.pixabay.com/photo/2015/05/31/10/55/man-791049_1280.jpg"
-          className="add-post-img"
-          alt=""
+      <form onSubmit={createPost}>
+        <input
+          type="text"
+          placeholder="Title"
+          onChange={(e) => setTitle(e.target.value)}
         />
-        <select name="category">
+        <div className="input-file">
+          <input
+            className="file"
+            type="file"
+            accept="image/*"
+            onChange={(e) => setThumbnail(e.target.files[0])}
+          />
+        </div>
+        {thumbnail && (
+          <img
+            src={URL.createObjectURL(thumbnail)}
+            className="add-post-img"
+            alt=""
+          />
+        )}
+        <select name="category" onChange={(e) => setCategory(e.target.value)}>
           <option value="uncategorized">Uncategorized</option>
           <option value="volvo">Volvo</option>
           <option value="saab">Saab</option>
@@ -70,8 +107,7 @@ const AddPost = () => {
           formats={formats}
           className="quill"
           theme="snow"
-          value={value}
-          onChange={setValue}
+          onChange={(e) => setDescription(e)}
         />
         <button className="btn" style={{ marginTop: "20px" }}>
           Publish

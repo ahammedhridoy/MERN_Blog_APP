@@ -1,6 +1,6 @@
 import "./SingleBlog.css";
 import Sidebar from "./../../component/Sidebar/Sidebar";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../context/GlobalContext";
 import axios from "axios";
@@ -10,17 +10,18 @@ import Relavent from "../../component/Relavent/Relavent";
 
 const SingleBlog = () => {
   const BASE_URL = "http://localhost:3000/api";
-  const { setSinglePost, singlePost } = useContext(GlobalContext);
+  const { setSinglePost, singlePost, fetchPosts } = useContext(GlobalContext);
   const { id } = useParams();
   const imageUrl = `http://localhost:3000/uploads/${singlePost.thumbnail}`;
   const { currentUser } = useContext(AuthContext);
-  const userId = currentUser?._id;
+  const authorId = currentUser?._id;
   // const location = useLocation();
   // const postUrl = `http://localhost:5173${location?.pathname}`;
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   // Single post
-
   useEffect(() => {
     const fetchSinglePost = async () => {
       try {
@@ -33,6 +34,25 @@ const SingleBlog = () => {
       }
     };
     fetchSinglePost();
+  }, []);
+
+  // Delete post
+
+  const deletePost = async () => {
+    try {
+      const { data } = await axios.delete(`${BASE_URL}/post/delete/${id}`, {
+        withCredentials: true,
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      navigate("/");
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPosts();
   }, []);
 
   return (
@@ -53,10 +73,12 @@ const SingleBlog = () => {
                   </Link>
                 </div>
 
-                {singlePost?.author?._id === userId && (
+                {singlePost?.author?._id === authorId && (
                   <div className="edit-delete">
                     <button className="btn">Edit</button>
-                    <button className="btn-delete">Delete</button>
+                    <button className="btn-delete" onClick={() => deletePost()}>
+                      Delete
+                    </button>
                   </div>
                 )}
               </div>

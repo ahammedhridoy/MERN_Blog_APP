@@ -48,13 +48,9 @@ const userLogin = async (req, res) => {
     if (!isPasswordMatch) {
       return res.status(401).json({ message: "Incorrect password" });
     }
-    const token = JWT.sign(
-      { id: user._id, username: user.username },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "25d",
-      }
-    );
+    const token = JWT.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "25d",
+    });
 
     // Exclude password field from user object
     const { password: userPassword, ...userDataWithoutPassword } =

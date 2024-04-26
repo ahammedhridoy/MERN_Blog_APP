@@ -1,18 +1,19 @@
 const JWT = require("jsonwebtoken");
 
-const authMiddleware = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  if (authHeader) {
-    const token = authHeader.split(" ")[1];
-    try {
-      const decoded = JWT.verify(token, process.env.JWT_SECRET);
-      req.user = decoded;
+const authMiddleware = async (req, res, next) => {
+  const Authorization = req.headers.Authorization || req.headers.authorization;
+
+  if (Authorization && Authorization.startsWith("Bearer")) {
+    const token = Authorization.split(" ")[1];
+    JWT.verify(token, process.env.JWT_SECRET, (err, user) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+      req.user = user;
       next();
-    } catch (err) {
-      res.status(401).json({ message: err.message });
-    }
+    });
   } else {
-    res.status(401).json({ message: "No token provided" });
+    res.sendStatus(401);
   }
 };
 

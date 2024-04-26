@@ -23,11 +23,9 @@ const Relavent = ({ id }) => {
 
         const res = await axios.get(`${BASE_URL}/post/category/${category}`);
         const data = res.data;
-        console.log("Received data:", data);
 
         if (data) {
           setCatPost(data);
-          console.log("Updated catPost:", catPost);
         }
       } catch (error) {
         console.log("Error updating catPost:", error);

@@ -11,7 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const BASE_URL = "http://localhost:3000/api";
-  const { setCurrentUser } = useContext(AuthContext);
+  const { setCurrentUser, setToken } = useContext(AuthContext);
 
   // Login
   const handleChange = async (e) => {
@@ -28,7 +28,7 @@ const Login = () => {
         return toast.error("There is an error during login. Please try again");
       }
       setCurrentUser(data?.user);
-      localStorage.setItem("token", JSON.stringify(data?.token));
+      setToken(data?.token);
       setTimeout(() => {
         navigate("/");
       }, 2000);

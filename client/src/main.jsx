@@ -21,7 +21,6 @@ import Edit from "./pages/Edit/Edit.jsx";
 import { AuthContextProvider } from "./context/AuthContext.jsx";
 import { GlobalContextProvider } from "./context/GlobalContext.jsx";
 import CategoryPage from "./pages/CategoryPage/CategoryPage.jsx";
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -91,7 +90,7 @@ const router = createBrowserRouter([
         element: <AddPost />,
       },
       {
-        path: "/profile",
+        path: "/profile/:id",
         element: <Profile />,
       },
       {

@@ -8,16 +8,16 @@ const DashboardLayout = () => {
   return (
     <div className="dashboard">
       <Header />
-      <div className="container">
-        <div className="dashboard-wrap">
-          <div className="dashboard-left">
-            <DashboardMenu />
-          </div>
-          <div className="dashboard-right">
-            <Outlet />
-          </div>
+      {/* <div className="container"> */}
+      <div className="dashboard-wrap">
+        <div className="dashboard-left">
+          <DashboardMenu />
+        </div>
+        <div className="dashboard-right">
+          <Outlet />
         </div>
       </div>
+      {/* </div> */}
       <Footer />
     </div>
   );

@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
 import "./DashboardMenu.css";
-import { MdContentPaste, MdDashboard } from "react-icons/md";
+import { MdDashboard } from "react-icons/md";
 import { ImProfile } from "react-icons/im";
 import { IoMdAddCircle } from "react-icons/io";
+import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
 
 const DashboardMenu = () => {
+  const { currentUser } = useContext(AuthContext);
+  const id = currentUser?._id;
   return (
     <div className="dashboard-menu">
       <div className="dash-menu-wrap">
@@ -12,13 +16,10 @@ const DashboardMenu = () => {
           <MdDashboard />
           <Link to={"/dashboard"}>Dashboard</Link>
         </ul>
-        <ul>
-          <MdContentPaste />
-          <Link to={"/my-posts"}>My Post</Link>
-        </ul>
+
         <ul>
           <ImProfile />
-          <Link to={"/dashboard"}>Profile</Link>
+          <Link to={`/profile/${id}`}>Profile</Link>
         </ul>
         <ul>
           <IoMdAddCircle />

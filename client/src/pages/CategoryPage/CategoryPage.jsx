@@ -43,8 +43,9 @@ const CategoryPage = () => {
   return (
     <div className="blogs">
       <img
+        height={"500px"}
         className="about-img"
-        src="https://cdn.pixabay.com/photo/2018/04/13/16/49/laptop-3317007_1280.jpg"
+        src="https://cdn.pixabay.com/photo/2019/09/17/18/48/computer-4484282_1280.jpg"
         alt=""
       />
 

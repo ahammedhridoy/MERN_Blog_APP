@@ -9,13 +9,13 @@ import Loading from "../Loading/Loading";
 import { GlobalContext } from "../../context/GlobalContext";
 
 const Sidebar = () => {
-  const { posts, loading } = useContext(GlobalContext);
+  const { posts, loading, fetchPosts } = useContext(GlobalContext);
   const [visiblePosts, setVisiblePosts] = useState(5);
   const [editVisiblePosts, setEditVisiblePosts] = useState(2);
 
-  // useEffect(() => {
-  //   fetchPosts();
-  // });
+  useEffect(() => {
+    fetchPosts();
+  });
 
   // Function to format date
   const formatDate = (dateString) => {

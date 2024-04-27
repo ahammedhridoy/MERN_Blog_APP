@@ -5,16 +5,11 @@ const authMiddleware = async (req, res, next) => {
 
   if (Authorization && Authorization.startsWith("Bearer")) {
     const token = Authorization.split(" ")[1];
-    console.log("token", token);
 
     JWT.verify(token, process.env.JWT_SECRET, (err, user) => {
-      console.log("err", err);
-      console.log(user);
       if (err) {
-        console.log(err);
         return res.sendStatus(403);
       }
-
       req.user = user;
       next();
     });

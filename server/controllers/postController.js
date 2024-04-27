@@ -1,12 +1,15 @@
 const { upload } = require("../helper/multer");
 const postModel = require("../models/postModel");
 const userModel = require("../models/userModel");
+const path = require("path");
 
 // Create Post
 const createPost = async (req, res, next) => {
   try {
     const { title, description, category } = req.body;
-    const thumbnail = req.file?.name;
+    const filename = req?.file.filename;
+    const fileUrl = path.join(filename);
+
     if (!title || !description || !category) {
       return res.status(400).json({ message: "Please fill all the fields" });
     }
@@ -17,8 +20,8 @@ const createPost = async (req, res, next) => {
     const newPost = await new postModel({
       title,
       description,
-      category,
-      thumbnail,
+      category: category || "uncategorized",
+      thumbnail: fileUrl,
       author: req.user.id,
     }).save();
     await userModel.findByIdAndUpdate(

@@ -23,9 +23,9 @@ export const GlobalContextProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  // useEffect(() => {
+  //   fetchPosts();
+  // }, []);
 
   return (
     <GlobalContext.Provider

@@ -12,3 +12,13 @@
   height: 200px;
   max-width: 100%;
 }
+.add-post form {
+  width: 80%;
+}
+.quill {
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: transparent;
+  border: 1px solid #ccc;
+  height: 400px;
+}

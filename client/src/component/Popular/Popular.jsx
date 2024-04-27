@@ -2,17 +2,17 @@ import "./Popular.css";
 import { LiaCommentSolid } from "react-icons/lia";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { Link } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../context/GlobalContext";
 import Loading from "../Loading/Loading";
 
 const Popular = () => {
-  const { posts, loading } = useContext(GlobalContext);
+  const { posts, loading, fetchPosts } = useContext(GlobalContext);
   const [visiblePosts, setVisiblePosts] = useState(6);
 
-  // useEffect(() => {
-  //   fetchPosts();
-  // }, []);
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   // Function to format date
   const formatDate = (dateString) => {

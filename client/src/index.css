@@ -210,6 +210,18 @@ textarea {
 
 /* Mobile */
 @media all and (max-width: 430px) {
+  .dash-menu-wrap {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .profile-container {
+    width: 80vw !important;
+  }
+  .dashboard-wrap {
+    flex-direction: column;
+    gap: 20px !important;
+  }
   .relavent-post {
     grid-template-columns: repeat(1, minmax(200px, 1fr)) !important;
   }

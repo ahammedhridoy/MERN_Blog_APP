@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Post from "../../component/Post/Post";
 import Sidebar from "../../component/Sidebar/Sidebar";
 import "./Blogs.css";
@@ -6,12 +6,12 @@ import { GlobalContext } from "../../context/GlobalContext";
 import Loading from "../../component/Loading/Loading";
 
 const Blogs = () => {
-  const { posts, loading } = useContext(GlobalContext);
+  const { posts, loading, fetchPosts } = useContext(GlobalContext);
   const [visiblePosts, setVisiblePosts] = useState(10);
 
-  // useEffect(() => {
-  //   fetchPosts();
-  // }, []);
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   // Function to load more posts
   const loadMorePosts = () => {

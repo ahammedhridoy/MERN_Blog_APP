@@ -1,14 +1,13 @@
 const express = require("express");
 const {
   createPost,
-  uploadThumbnail,
   getAllPosts,
   getSinglePost,
   getCategoryPost,
   getAuthorPost,
   editPost,
   deletePost,
-  getCategory,
+  uploadThumbnail,
 } = require("../controllers/postController");
 const { authMiddleware } = require("../middleware/authMiddleware");
 const { upload } = require("../helper/multer");
@@ -21,7 +20,7 @@ postRouter.post(
   upload.single("thumbnail"),
   createPost
 );
-postRouter.post("/post/thumbnail", authMiddleware, uploadThumbnail);
+
 postRouter.get("/post/all", getAllPosts);
 postRouter.get("/post/single/:id", getSinglePost);
 postRouter.get("/post/author/:id", getAuthorPost);

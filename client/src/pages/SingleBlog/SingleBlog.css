@@ -56,7 +56,20 @@
   object-fit: cover;
   height: 50px;
 }
+.single-post-details .post-desc img {
+  width: 100%;
+}
 
+.single-post-details .post-desc p {
+  margin: 20px 0;
+}
+
+.single-post-details .post-desc p img {
+  margin: 20px 0;
+}
+.single-post-details .post-cat {
+  margin-top: 10px;
+}
 .reply-details p {
   color: var(--other-text-color);
   font-size: 14px;

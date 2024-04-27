@@ -2,17 +2,17 @@ import { Link } from "react-router-dom";
 import "./LatestPost.css";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { LiaCommentSolid } from "react-icons/lia";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../context/GlobalContext";
 import Loading from "../Loading/Loading";
 
 const LatestPost = () => {
-  const { posts, loading } = useContext(GlobalContext);
+  const { posts, loading, fetchPosts } = useContext(GlobalContext);
   const [visiblePosts, setVisiblePosts] = useState(5);
 
-  // useEffect(() => {
-  //   fetchPosts();
-  // }, []);
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   // Function to format date
   const formatDate = (dateString) => {

@@ -13,7 +13,7 @@ import { toast, ToastContainer } from "react-toastify";
 const Header = () => {
   const [active, setActive] = useState(false);
   const { currentUser } = useContext(AuthContext);
-
+  const id = currentUser?._id;
   // Logout
   const handleLogout = () => {
     localStorage.clear();
@@ -69,7 +69,7 @@ const Header = () => {
               {currentUser && (
                 <>
                   <li>
-                    <Link to="/profile">Profile</Link>
+                    <Link to={`/profile/${id}`}>Profile</Link>
                   </li>
                   <li>
                     <Link onClick={handleLogout}>Logout</Link>

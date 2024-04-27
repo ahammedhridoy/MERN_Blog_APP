@@ -6,21 +6,21 @@ const { connectDB } = require("./helper/database");
 const { postRouter } = require("./routes/postRoutes");
 const path = require("path");
 const { categoryRouter } = require("./routes/categoryRoutes");
+const bodyParse = require("body-parser");
 
 const app = express();
 app.use(express.json());
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: ["http://localhost:5173"],
   credentials: true,
   optionSuccessStatus: 200,
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 app.use(cors(corsOptions));
+app.use(bodyParse.urlencoded({ extended: true }));
 
 // Serve static files from the 'server/uploads' folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
-app.use(express.urlencoded({ extended: true }));
 
 const port = process.env.PORT || 3000;
 

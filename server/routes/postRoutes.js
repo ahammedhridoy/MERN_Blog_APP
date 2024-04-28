@@ -8,6 +8,8 @@ const {
   editPost,
   deletePost,
   uploadThumbnail,
+  likePost,
+  addComment,
 } = require("../controllers/postController");
 const { authMiddleware } = require("../middleware/authMiddleware");
 const { upload } = require("../helper/multer");
@@ -25,8 +27,10 @@ postRouter.get("/post/all", getAllPosts);
 postRouter.get("/post/single/:id", getSinglePost);
 postRouter.get("/post/author/:id", getAuthorPost);
 postRouter.get("/post/category/:category", getCategoryPost);
-postRouter.put("/post/edit/:id", authMiddleware, editPost);
+postRouter.patch("/post/edit/:id", authMiddleware, editPost);
 postRouter.delete("/post/delete/:id", authMiddleware, deletePost);
+postRouter.patch("/post/like/:id", authMiddleware, likePost);
+postRouter.patch("/post/comment/:id", authMiddleware, addComment);
 
 module.exports = {
   postRouter,

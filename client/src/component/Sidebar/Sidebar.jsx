@@ -13,9 +13,9 @@ const Sidebar = () => {
   const [visiblePosts, setVisiblePosts] = useState(5);
   const [editVisiblePosts, setEditVisiblePosts] = useState(2);
 
-  useEffect(() => {
-    fetchPosts();
-  });
+  // useEffect(() => {
+  //   fetchPosts();
+  // });
 
   // Function to format date
   const formatDate = (dateString) => {

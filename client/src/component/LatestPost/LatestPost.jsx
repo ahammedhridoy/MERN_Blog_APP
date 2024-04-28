@@ -1,18 +1,20 @@
 import { Link } from "react-router-dom";
 import "./LatestPost.css";
-import { FcLikePlaceholder } from "react-icons/fc";
+import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 import { LiaCommentSolid } from "react-icons/lia";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { GlobalContext } from "../../context/GlobalContext";
 import Loading from "../Loading/Loading";
 
 const LatestPost = () => {
-  const { posts, loading, fetchPosts } = useContext(GlobalContext);
+  const { posts, loading, sendLike } = useContext(GlobalContext);
   const [visiblePosts, setVisiblePosts] = useState(5);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?._id;
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  // useEffect(() => {
+  //   fetchPosts();
+  // }, []);
 
   // Function to format date
   const formatDate = (dateString) => {
@@ -24,6 +26,7 @@ const LatestPost = () => {
   const loadMorePosts = () => {
     setVisiblePosts((prevVisiblePosts) => prevVisiblePosts + 5);
   };
+
   return (
     <div className="latest-post-wrap">
       <div className="container">
@@ -71,9 +74,18 @@ const LatestPost = () => {
                     </div>
                     <div className="latest-post-likes-comments">
                       <div className="latest-post-likes">
-                        <FcLikePlaceholder className="latest-like" />
-                        {/* <FcLike className="like" /> */}
-                        <span>{post?.like?.length || 0}</span>
+                        {post?.likes?.includes(userId) ? (
+                          <FcLike
+                            className="like"
+                            onClick={() => sendLike(post?._id)}
+                          />
+                        ) : (
+                          <FcLikePlaceholder
+                            className="latest-like"
+                            onClick={() => sendLike(post?._id)}
+                          />
+                        )}
+                        <span>{post?.likes?.length || 0}</span>
                       </div>
                       <div className="latest-post-comments">
                         <LiaCommentSolid className="latest-dislike" />

@@ -95,7 +95,6 @@ const AddPost = () => {
   return (
     <div className="add-post">
       <Toaster position="top-center" reverseOrder={false} />
-      <h1>Add Post</h1>
 
       <form onSubmit={createPost} encType="multipart/form-data" method="post">
         <input
@@ -112,7 +111,6 @@ const AddPost = () => {
             accept="image/*"
             name="thumbnail"
             onChange={(e) => setThumbnail(e.target.files[0])}
-            // value={thumbnail}
           />
         </div>
 
@@ -124,13 +122,17 @@ const AddPost = () => {
           />
         )}
         <select name="category" onChange={(e) => setCategory(e.target.value)}>
-          <option value="uncategorized">Uncategorized</option>
-          <option value="education">Education</option>
-          <option value="entertainment">Entertainment</option>
-          <option value="health">Health</option>
-          <option value="science">Science</option>
-          <option value="sports">Sports</option>
-          <option value="technology">Technology</option>
+          <option value="Uncategorized">Uncategorized</option>
+          <option value="Travel">Travel</option>
+          <option value="Food & Cooking">Food & Cooking</option>
+          <option value="Health & Wellness">Health & Wellness</option>
+          <option value="Fashion & Style">Fashion & Style</option>
+          <option value="Fitness & Exercise">Fitness & Exercise</option>
+          <option value="Technology">Technology</option>
+          <option value="Personal Finance">Personal Finance</option>
+          <option value="Home & Decor">Home & Decor</option>
+          <option value="Education & Learning">Education & Learning</option>
+          <option value="Sports & Media">Sports & Media</option>
         </select>
         <ReactQuill
           modules={modules}
@@ -140,7 +142,7 @@ const AddPost = () => {
           onChange={(e) => setDescription(e)}
           value={description}
         />
-        <button className="btn" style={{ marginTop: "20px" }}>
+        <button type="submit" className="btn" style={{ marginTop: "20px" }}>
           Publish
         </button>
       </form>

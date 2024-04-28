@@ -9,9 +9,9 @@ const Blogs = () => {
   const { posts, loading, fetchPosts } = useContext(GlobalContext);
   const [visiblePosts, setVisiblePosts] = useState(10);
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  // useEffect(() => {
+  //   fetchPosts();
+  // }, []);
 
   // Function to load more posts
   const loadMorePosts = () => {

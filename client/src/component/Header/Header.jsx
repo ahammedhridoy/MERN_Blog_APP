@@ -72,6 +72,9 @@ const Header = () => {
                     <Link to={`/profile/${id}`}>Profile</Link>
                   </li>
                   <li>
+                    <Link to={`/dashboard`}>Dashboard</Link>
+                  </li>
+                  <li>
                     <Link onClick={handleLogout}>Logout</Link>
                   </li>
                 </>

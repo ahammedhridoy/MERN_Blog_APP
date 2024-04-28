@@ -17,23 +17,34 @@ const postSchema = new mongoose.Schema(
     category: {
       type: String,
       enum: [
-        "education",
-        "entertainment",
-        "health",
-        "science",
-        "sports",
-        "technology",
+        "Travel",
+        "Food & Cooking",
+        "Health & Wellness",
+        "Fashion & Style",
+        "Fitness & Exercise",
+        "Technology",
+        "Personal Finance",
+        "Home & Decor",
+        "Education & Learning",
+        "Sports & Media",
       ],
-      default: "uncategorized",
+      default: "Uncategorized",
     },
-    like: {
-      type: Number,
-      default: 0,
-    },
-    comments: {
-      type: [String],
-      default: [],
-    },
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    comments: [
+      {
+        text: String,
+        userId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+      },
+    ],
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

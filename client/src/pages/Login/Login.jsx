@@ -2,9 +2,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 import { useContext, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
+import toast, { Toaster } from "react-hot-toast";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -41,7 +41,7 @@ const Login = () => {
 
   return (
     <div className="login">
-      <ToastContainer />
+      <Toaster />
       <div className="card">
         <h1 className="title">Login</h1>
 

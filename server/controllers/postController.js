@@ -59,7 +59,7 @@ const getAllPosts = async (req, res) => {
   try {
     const posts = await postModel
       .find({})
-      .sort({ updatedAt: -1 })
+      .sort({ createdAt: -1 })
       .populate([{ path: "author" }, { path: "category" }]);
     if (!posts) {
       return res.status(404).json({ message: "No posts found" });
@@ -131,7 +131,15 @@ const editPost = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, description, category } = req.body;
-    const thumbnail = req.file?.filename;
+    console.log(title, description, category, id);
+
+    // Check if a file was uploaded
+    let fileUrl = "";
+    if (req.file) {
+      const filename = req.file.filename;
+      // Construct file URL
+      fileUrl = `${filename}`; // Adjust the path as per your file storage configuration
+    }
 
     // Find the post by ID
     const post = await postModel.findById(id);
@@ -144,15 +152,21 @@ const editPost = async (req, res) => {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
+    // Prepare update data
+    const updateData = {};
+    if (title) updateData.title = title;
+    if (description) updateData.description = description;
+    if (category) updateData.category = category;
+    if (fileUrl) updateData.thumbnail = fileUrl;
+
     // Update the post
-    const updatedPost = await postModel.findByIdAndUpdate(
-      id,
-      { title, description, category, thumbnail },
-      { new: true }
-    );
+    const updatedPost = await postModel.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
 
     res.status(200).json({ message: "Post updated successfully", updatedPost });
   } catch (error) {
+    console.error("Error editing post:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -163,6 +177,7 @@ const deletePost = async (req, res) => {
   try {
     const { id } = req.params;
     const authorId = req.user.id;
+    console.log(authorId);
 
     // Find the post by ID
     const post = await postModel.findById(id);
@@ -185,6 +200,59 @@ const deletePost = async (req, res) => {
   }
 };
 
+// Like a post
+const likePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    const post = await postModel.findById(id);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    const alreadyLiked = post.likes.includes(userId);
+
+    if (alreadyLiked) {
+      post.likes.pull(userId);
+    } else {
+      post.likes.push(userId);
+    }
+
+    await post.save();
+
+    const message = alreadyLiked
+      ? "Post unliked successfully"
+      : "Post liked successfully";
+
+    res.status(200).json({ message, post });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+// Add a comment to a post
+const addComment = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const { comment, userId } = req.body;
+
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    post.comments.push({ text: comment, userId });
+    await post.save();
+
+    res.status(200).json({ message: "Comment added successfully", post });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 module.exports = {
   createPost,
   uploadThumbnail,
@@ -194,4 +262,6 @@ module.exports = {
   getAuthorPost,
   editPost,
   deletePost,
+  likePost,
+  addComment,
 };

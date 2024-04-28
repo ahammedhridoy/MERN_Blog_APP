@@ -16,8 +16,6 @@ const SingleBlog = () => {
   const imageUrl = `http://localhost:3000/uploads/${singlePost.thumbnail}`;
   const { currentUser, user, setUser } = useContext(AuthContext);
   const authorId = currentUser?._id;
-  // const location = useLocation();
-  // const postUrl = `http://localhost:5173${location?.pathname}`;
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const token =
@@ -27,7 +25,9 @@ const SingleBlog = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const { data } = await axios.get(`${BASE_URL}/user/${id}`);
+        const { data } = await axios.get(
+          `${BASE_URL}/user/${currentUser?._id}`
+        );
         if (!data) {
           return navigate("/login");
         }
@@ -72,9 +72,9 @@ const SingleBlog = () => {
     }
   };
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  // useEffect(() => {
+  //   fetchPosts();
+  // }, []);
 
   return (
     <div
@@ -97,7 +97,9 @@ const SingleBlog = () => {
 
                 {singlePost?.author?._id === authorId && (
                   <div className="edit-delete">
-                    <button className="btn">Edit</button>
+                    <Link to={`/post/edit/${singlePost?._id}`}>
+                      <button className="btn">Edit</button>
+                    </Link>
                     <button className="btn-delete" onClick={() => deletePost()}>
                       Delete
                     </button>

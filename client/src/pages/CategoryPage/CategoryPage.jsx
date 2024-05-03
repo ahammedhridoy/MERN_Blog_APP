@@ -21,6 +21,7 @@ const CategoryPage = () => {
           `${BASE_URL}/post/category/${category}`
         );
         setCategoryPost(data);
+        window.scrollTo(0, 0);
         console.log(categoryPost);
       } catch (error) {
         console.log(error);

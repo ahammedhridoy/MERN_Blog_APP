@@ -60,12 +60,18 @@ const getAllPosts = async (req, res) => {
     const posts = await postModel
       .find({})
       .sort({ createdAt: -1 })
-      .populate([{ path: "author" }, { path: "category" }]);
-    if (!posts) {
+      .populate([
+        { path: "author", model: "User" },
+        { path: "comments.userId", model: "User" },
+      ]);
+
+    if (!posts || posts.length === 0) {
       return res.status(404).json({ message: "No posts found" });
     }
+
     res.status(200).json(posts);
   } catch (error) {
+    console.error("Error fetching posts:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -75,9 +81,10 @@ const getAllPosts = async (req, res) => {
 const getSinglePost = async (req, res) => {
   try {
     const { id } = req.params;
-    const post = await postModel
-      .findById(id)
-      .populate([{ path: "author" }, { path: "category" }]);
+    const post = await postModel.findById(id).populate([
+      { path: "author", model: "User" },
+      { path: "comments.userId", model: "User" },
+    ]);
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
@@ -133,33 +140,27 @@ const editPost = async (req, res) => {
     const { title, description, category } = req.body;
     console.log(title, description, category, id);
 
-    // Check if a file was uploaded
     let fileUrl = "";
     if (req.file) {
       const filename = req.file.filename;
-      // Construct file URL
-      fileUrl = `${filename}`; // Adjust the path as per your file storage configuration
+      fileUrl = `${filename}`;
     }
 
-    // Find the post by ID
     const post = await postModel.findById(id);
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    // Check if the user is authorized to edit the post
     if (post.author.toString() !== req.user.id) {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    // Prepare update data
     const updateData = {};
     if (title) updateData.title = title;
     if (description) updateData.description = description;
     if (category) updateData.category = category;
     if (fileUrl) updateData.thumbnail = fileUrl;
 
-    // Update the post
     const updatedPost = await postModel.findByIdAndUpdate(id, updateData, {
       new: true,
     });
@@ -235,18 +236,55 @@ const likePost = async (req, res) => {
 // Add a comment to a post
 const addComment = async (req, res) => {
   try {
-    const { postId } = req.params;
-    const { comment, userId } = req.body;
+    const { id } = req.params;
+    const { comment } = req.body;
+    const userId = req.user.id;
 
-    const post = await Post.findById(postId);
+    const post = await postModel.findById(id);
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
 
+    // Push the new comment with userId to the comments array
     post.comments.push({ text: comment, userId });
     await post.save();
 
     res.status(200).json({ message: "Comment added successfully", post });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Comment could not added" });
+  }
+};
+
+// Delete a comment
+const deleteComment = async (req, res) => {
+  try {
+    const { postId, commentId } = req.params;
+    const userId = req.user.id;
+
+    // Find the post containing the comment
+    const post = await postModel.findById(postId);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    // Find the index of the comment to delete
+    const commentIndex = post.comments.findIndex(
+      (comment) =>
+        comment._id.toString() === commentId &&
+        comment.userId.toString() === userId
+    );
+    if (commentIndex === -1) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+
+    // Remove the comment from the comments array
+    post.comments.splice(commentIndex, 1);
+
+    // Save the updated post
+    await post.save();
+
+    res.status(200).json({ message: "Comment deleted successfully", post });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -264,4 +302,5 @@ module.exports = {
   deletePost,
   likePost,
   addComment,
+  deleteComment,
 };

@@ -7,6 +7,7 @@ import { IoLogoYoutube } from "react-icons/io";
 import { useContext, useEffect, useState } from "react";
 import Loading from "../Loading/Loading";
 import { GlobalContext } from "../../context/GlobalContext";
+import Newsletter from "../Newsletter/Newsletter";
 
 const Sidebar = () => {
   const { posts, loading, fetchPosts } = useContext(GlobalContext);
@@ -121,16 +122,7 @@ const Sidebar = () => {
         <div className="popular-title">Newsletter</div>
 
         <h4>Subscribe to Our Newsletter</h4>
-        <div className="newsletter">
-          <form>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Enter your email"
-            />
-            <button className="btn">Subscribe</button>
-          </form>
-        </div>
+        <Newsletter />
 
         <hr style={{ margin: "20px 0" }} />
 

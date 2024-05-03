@@ -10,6 +10,7 @@ const {
   uploadThumbnail,
   likePost,
   addComment,
+  deleteComment,
 } = require("../controllers/postController");
 const { authMiddleware } = require("../middleware/authMiddleware");
 const { upload } = require("../helper/multer");
@@ -31,6 +32,11 @@ postRouter.patch("/post/edit/:id", authMiddleware, editPost);
 postRouter.delete("/post/delete/:id", authMiddleware, deletePost);
 postRouter.patch("/post/like/:id", authMiddleware, likePost);
 postRouter.patch("/post/comment/:id", authMiddleware, addComment);
+postRouter.delete(
+  "/post/:postId/comment/:commentId",
+  authMiddleware,
+  deleteComment
+);
 
 module.exports = {
   postRouter,

@@ -1,26 +1,37 @@
 import "./SingleBlog.css";
 import Sidebar from "./../../component/Sidebar/Sidebar";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { GlobalContext } from "../../context/GlobalContext";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import Loading from "../../component/Loading/Loading";
 import Relavent from "../../component/Relavent/Relavent";
 import toast, { Toaster } from "react-hot-toast";
+import CommentArea from "../../component/CommentArea/CommentArea";
 
 const SingleBlog = () => {
   const BASE_URL = "http://localhost:3000/api";
-  const { setSinglePost, singlePost, fetchPosts } = useContext(GlobalContext);
+  const {
+    fetchSinglePost,
+    singlePost,
+    addComment,
+    loading,
+    setComment,
+    comment,
+    commentLoading,
+    fetchPosts,
+  } = useContext(GlobalContext);
+
   const { id } = useParams();
   const imageUrl = `http://localhost:3000/uploads/${singlePost.thumbnail}`;
-  const { currentUser, user, setUser } = useContext(AuthContext);
+  const avatarUrl = `http://localhost:3000/uploads/${singlePost?.author?.avatar}`;
+  const commentAvatarUrl = `http://localhost:3000/uploads`;
+  const { currentUser, setUser } = useContext(AuthContext);
   const authorId = currentUser?._id;
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const token =
     JSON.parse(localStorage.getItem("token")) || localStorage.getItem("token");
-
   // Fetch User
   useEffect(() => {
     const fetchUser = async () => {
@@ -39,21 +50,6 @@ const SingleBlog = () => {
     fetchUser();
   }, []);
 
-  // Single post
-  useEffect(() => {
-    const fetchSinglePost = async () => {
-      try {
-        const { data } = await axios.get(`${BASE_URL}/post/single/${id}`);
-        await setSinglePost(data);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchSinglePost();
-  }, []);
-
   // Delete post
 
   const deletePost = async () => {
@@ -64,6 +60,7 @@ const SingleBlog = () => {
       });
 
       toast.success("Post deleted successfully");
+      fetchPosts();
       setTimeout(() => {
         navigate("/");
       }, 2000);
@@ -72,9 +69,32 @@ const SingleBlog = () => {
     }
   };
 
-  // useEffect(() => {
-  //   fetchPosts();
-  // }, []);
+  // Delete comment
+  const deleteComment = async (postId, commentId) => {
+    try {
+      // Make the delete request
+      const res = await axios.delete(
+        `${BASE_URL}/post/${postId}/comment/${commentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (res?.data?.post) {
+        toast.success("Comment deleted successfully");
+        fetchSinglePost(id);
+      }
+    } catch (error) {
+      // Handle error response
+      console.error("Error:", error.res.data.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchSinglePost(id);
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div
@@ -122,10 +142,14 @@ const SingleBlog = () => {
                 </div>
                 <div className="post-container">
                   <div className="author-info">
-                    <img
-                      src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
-                      alt=""
-                    />
+                    {avatarUrl ? (
+                      <img src={avatarUrl} alt="" />
+                    ) : (
+                      <img
+                        src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
+                        alt=""
+                      />
+                    )}
                     <h4>
                       <b>{singlePost?.author?.username}</b>
                     </h4>
@@ -151,45 +175,53 @@ const SingleBlog = () => {
               </div>
 
               {/* Comments */}
-              <div className="comments-section">
-                <h3>05 Comments</h3>
-                <div className="comment">
-                  <img
-                    src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
-                    alt=""
-                  />
-                  <div className="comment-details">
-                    <h4>{user?.username}</h4>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Quisquam quaerat quod, quibusdam quod quaerat quaerat
-                      quaerat quaerat quaerat quaerat quaerat quaerat quaerat
-                      quaerat quaerat quaerat
-                    </p>
-                    <div className="post-cat">
-                      <div className="badge">Edit</div>
-                      <div className="badge" style={{ backgroundColor: "red" }}>
-                        Delete
+              {commentLoading ? (
+                <Loading />
+              ) : (
+                <div className="comments-section">
+                  <h3>{singlePost?.comments?.length} Comments</h3>
+                  {singlePost?.comments?.map((comment) => (
+                    <div className="comment" key={comment._id}>
+                      <img
+                        src={`${commentAvatarUrl}/${comment.userId.avatar}`}
+                        alt=""
+                      />
+
+                      <div className="comment-details">
+                        <h4>{comment?.userId?.username}</h4>
+
+                        <p>{comment?.text}</p>
+
+                        {currentUser?._id === comment?.userId?._id && (
+                          <>
+                            <div className="post-cat">
+                              <div
+                                className="badge"
+                                style={{ backgroundColor: "red" }}
+                                onClick={() =>
+                                  deleteComment(singlePost?._id, comment?._id)
+                                }
+                              >
+                                Delete
+                              </div>
+                            </div>
+                          </>
+                        )}
                       </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
-              </div>
+              )}
 
               {/* Submit comments */}
-              <div className="submit-comment">
-                <h4>Leave a comment</h4>
-                <form>
-                  <textarea
-                    name=""
-                    id=""
-                    cols="3"
-                    rows="3"
-                    placeholder="Message"
-                  ></textarea>
-                  <button className="btn submit">Submit</button>
-                </form>
-              </div>
+              {currentUser && (
+                <CommentArea
+                  comment={comment}
+                  setComment={setComment}
+                  addComment={addComment}
+                  id={id}
+                />
+              )}
             </>
           )}
         </div>

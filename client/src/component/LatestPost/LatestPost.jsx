@@ -8,6 +8,7 @@ import Loading from "../Loading/Loading";
 
 const LatestPost = () => {
   const { posts, loading, sendLike } = useContext(GlobalContext);
+
   const [visiblePosts, setVisiblePosts] = useState(5);
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?._id;

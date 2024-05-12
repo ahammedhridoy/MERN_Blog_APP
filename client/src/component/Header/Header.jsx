@@ -1,5 +1,5 @@
 import "./Header.css";
-import logo from "../../assets/logo.png";
+import logo from "/assets/blogify.png";
 import { Link } from "react-router-dom";
 import { IoMenu } from "react-icons/io5";
 import { IoMdClose } from "react-icons/io";

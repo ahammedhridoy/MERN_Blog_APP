@@ -8,7 +8,6 @@ import toast, { Toaster } from "react-hot-toast";
 
 const Dashboard = () => {
   const { currentUser } = useContext(AuthContext);
-  const navigate = useNavigate();
   const { posts, fetchPosts } = useContext(GlobalContext);
   const [visiblePosts, setVisiblePosts] = useState(10);
   const BASE_URL = "http://localhost:3000/api";
@@ -39,11 +38,6 @@ const Dashboard = () => {
     setVisiblePosts((prevVisiblePosts) => prevVisiblePosts + 10);
   };
 
-  useEffect(() => {
-    if (!currentUser) {
-      navigate("/login");
-    }
-  }, []);
   return (
     <div>
       <Toaster />

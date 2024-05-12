@@ -1,12 +1,9 @@
+import Banner from "../../component/Banner/Banner";
 import "./Contact.css";
 const Contact = () => {
   return (
     <div className="contact">
-      <img
-        className="contact-img"
-        src="https://cdn.pixabay.com/photo/2017/05/30/01/36/contact-us-2355449_960_720.jpg"
-        alt=""
-      />
+      <Banner />
 
       <div className="container contact-wrap">
         <div className="contact-from">

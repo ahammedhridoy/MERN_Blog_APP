@@ -31,7 +31,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="container">
-        <div className="popular-title">Editor's Pick</div>
+        <div className="popular-title">Sidebar</div>
         {/* post */}
 
         {loading ? (

@@ -4,14 +4,11 @@ import Sidebar from "../../component/Sidebar/Sidebar";
 import "./Blogs.css";
 import { GlobalContext } from "../../context/GlobalContext";
 import Loading from "../../component/Loading/Loading";
+import Banner from "../../component/Banner/Banner";
 
 const Blogs = () => {
   const { posts, loading } = useContext(GlobalContext);
   const [visiblePosts, setVisiblePosts] = useState(10);
-
-  // useEffect(() => {
-  //   fetchPosts();
-  // }, []);
 
   // Function to load more posts
   const loadMorePosts = () => {
@@ -20,11 +17,7 @@ const Blogs = () => {
 
   return (
     <div className="blogs">
-      <img
-        className="about-img"
-        src="https://cdn.pixabay.com/photo/2018/04/13/16/49/laptop-3317007_1280.jpg"
-        alt=""
-      />
+      <Banner />
 
       <div style={{ padding: "0 20px" }}>
         <div className="blogs-content">

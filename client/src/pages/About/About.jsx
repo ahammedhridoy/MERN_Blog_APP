@@ -1,13 +1,9 @@
+import Banner from "../../component/Banner/Banner";
 import "./About.css";
 const About = () => {
   return (
     <div className="about">
-      <img
-        className="about-img"
-        src="https://cdn.pixabay.com/photo/2017/08/27/09/21/imprint-2685464_1280.jpg"
-        alt=""
-      />
-
+      <Banner />
       <div className="container about-wrap">
         <div className="left">
           <img

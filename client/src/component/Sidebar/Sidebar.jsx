@@ -75,19 +75,23 @@ const Sidebar = () => {
         {/* Social Networks */}
         <div className="popular-title">Social Networks</div>
 
-        <Link to={"/"} className="link">
+        <Link to={"https://facebook.com"} target="_blank" className="link">
           <div className="facebook">
             <FaFacebookSquare />
             <p>Like Our Page</p>
           </div>
         </Link>
-        <Link to={"/"} className="link">
+        <Link to={"https://twitter.com"} target="_blank" className="link">
           <div className="twitter">
             <FaTwitterSquare />
             <p>Follow Us</p>
           </div>
         </Link>
-        <Link to={"/"} className="link">
+        <Link
+          to={"https://www.youtube.com/@TECHNOLOGYNULL"}
+          target="_blank"
+          className="link"
+        >
           <div className="youtube">
             <IoLogoYoutube />
             <p>Check Recent Update</p>

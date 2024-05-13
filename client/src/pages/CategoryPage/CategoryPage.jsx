@@ -4,16 +4,15 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { LiaCommentSolid } from "react-icons/lia";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Banner from "./../../component/Banner/Banner";
+import { GlobalContext } from "../../context/GlobalContext";
 
 const CategoryPage = () => {
   const [visiblePosts, setVisiblePosts] = useState(10);
-  const BASE_URL = "http://localhost:3000/api";
   const [categoryPost, setCategoryPost] = useState([]);
   const { category } = useParams();
-  console.log(category);
-
+  const { BASE_URL } = useContext(GlobalContext);
   // Category post
   useEffect(() => {
     const getCategoryPost = async () => {

@@ -5,12 +5,13 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
+import { GlobalContext } from "../../context/GlobalContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const BASE_URL = "http://localhost:3000/api";
+  const { BASE_URL } = useContext(GlobalContext);
   const { setCurrentUser, setToken } = useContext(AuthContext);
 
   // Login

@@ -4,20 +4,20 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { GlobalContext } from "../../context/GlobalContext";
 
 const Profile = () => {
   const { currentUser, setUser, user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [avatar, setAvatar] = useState("");
   const token = JSON.parse(localStorage.getItem("token"));
-  const BASE_URL = "http://localhost:3000/api";
+  const { BASE_URL } = useContext(GlobalContext);
   const { id } = useParams();
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  // console.log(currentPassword, newPassword, confirmPassword);
 
   // Upload profile picture
   const uploadPic = async (e) => {

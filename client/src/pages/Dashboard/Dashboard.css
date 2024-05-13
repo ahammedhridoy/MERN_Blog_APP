@@ -1,3 +1,11 @@
 .post-item-left img {
   width: 80px !important;
 }
+.no-posts {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

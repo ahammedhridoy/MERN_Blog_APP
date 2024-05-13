@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Banner from "../../component/Banner/Banner";
 import "./Contact.css";
 import axios from "axios";
 import { toast, Toaster } from "react-hot-toast";
+import { GlobalContext } from "../../context/GlobalContext";
 const Contact = () => {
   // Contact states
   const [name, setName] = useState("");
@@ -10,7 +11,7 @@ const Contact = () => {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   // Base URL
-  const BASE_URL = "http://localhost:3000/api";
+  const { BASE_URL } = useContext(GlobalContext);
 
   // Contact
   const handleSubmit = async () => {

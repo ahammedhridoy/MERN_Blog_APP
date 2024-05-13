@@ -10,13 +10,12 @@ import { toast } from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
 const AddPost = () => {
   const { currentUser } = useContext(AuthContext);
-  const { fetchPosts } = useContext(GlobalContext);
+  const { fetchPosts, BASE_URL } = useContext(GlobalContext);
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [thumbnail, setThumbnail] = useState("");
   const [category, setCategory] = useState("uncategorized");
   const [description, setDescription] = useState("");
-  const BASE_URL = "http://localhost:3000/api";
   const token = JSON.parse(localStorage.getItem("token"));
 
   // create post

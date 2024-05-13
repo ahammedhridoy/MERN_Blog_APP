@@ -109,6 +109,7 @@ export const GlobalContextProvider = ({ children }) => {
         setComment,
         comment,
         commentLoading,
+        BASE_URL,
       }}
     >
       {children}

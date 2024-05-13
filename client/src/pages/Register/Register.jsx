@@ -1,15 +1,16 @@
 /* eslint-disable no-undef */
 import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { GlobalContext } from "../../context/GlobalContext";
+import toast, { Toaster } from "react-hot-toast";
 const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const BASE_URL = "http://localhost:3000/api";
+  const { BASE_URL } = useContext(GlobalContext);
   const handleChange = async (e) => {
     e.preventDefault();
     try {
@@ -35,7 +36,7 @@ const Register = () => {
   };
   return (
     <div className="register">
-      <ToastContainer />
+      <Toaster />
       <div className="card">
         <h1 className="title">Register</h1>
 

@@ -8,16 +8,16 @@ import { GlobalContext } from "../../context/GlobalContext";
 import axios from "axios";
 
 const UpdatePost = () => {
-  const { setSinglePost, singlePost, fetchPosts } = useContext(GlobalContext);
-  const [user, setUser] = useState({});
+  const { setSinglePost, singlePost, fetchPosts, BASE_URL } =
+    useContext(GlobalContext);
+  const [setUser] = useState({});
   const [title, setTitle] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
-  const BASE_URL = "http://localhost:3000/api";
   const token = JSON.parse(localStorage.getItem("token"));
   const { currentUser } = useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
+  const [setLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
 

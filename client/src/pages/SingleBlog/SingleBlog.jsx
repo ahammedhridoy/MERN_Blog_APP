@@ -10,7 +10,6 @@ import toast, { Toaster } from "react-hot-toast";
 import CommentArea from "../../component/CommentArea/CommentArea";
 
 const SingleBlog = () => {
-  const BASE_URL = "http://localhost:3000/api";
   const {
     fetchSinglePost,
     singlePost,
@@ -20,6 +19,7 @@ const SingleBlog = () => {
     comment,
     commentLoading,
     fetchPosts,
+    BASE_URL,
   } = useContext(GlobalContext);
 
   const { id } = useParams();

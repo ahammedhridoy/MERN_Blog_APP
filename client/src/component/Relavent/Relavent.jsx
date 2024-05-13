@@ -9,8 +9,7 @@ import { GlobalContext } from "../../context/GlobalContext";
 
 const Relavent = ({ id }) => {
   const [catPost, setCatPost] = useState([]);
-  const { posts } = useContext(GlobalContext);
-  const BASE_URL = "http://localhost:3000/api";
+  const { posts, BASE_URL } = useContext(GlobalContext);
 
   const post = posts.find((p) => p?._id === id);
   const category = post ? post.category : null;

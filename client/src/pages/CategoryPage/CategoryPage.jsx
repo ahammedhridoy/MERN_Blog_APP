@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { LiaCommentSolid } from "react-icons/lia";
 import { useEffect, useState } from "react";
+import Banner from "./../../component/Banner/Banner";
 
 const CategoryPage = () => {
   const [visiblePosts, setVisiblePosts] = useState(10);
@@ -43,12 +44,7 @@ const CategoryPage = () => {
 
   return (
     <div className="blogs">
-      <img
-        height={"500px"}
-        className="about-img"
-        src="https://cdn.pixabay.com/photo/2019/09/17/18/48/computer-4484282_1280.jpg"
-        alt=""
-      />
+      <Banner />
 
       <div style={{ padding: "0 20px" }}>
         {/* <Category /> */}

@@ -6,7 +6,6 @@ import { GlobalContext } from "../../context/GlobalContext";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import Loading from "../../component/Loading/Loading";
-import Relavent from "../../component/Relavent/Relavent";
 import toast, { Toaster } from "react-hot-toast";
 import CommentArea from "../../component/CommentArea/CommentArea";
 
@@ -29,6 +28,7 @@ const SingleBlog = () => {
   const commentAvatarUrl = `http://localhost:3000/uploads`;
   const { currentUser, setUser } = useContext(AuthContext);
   const authorId = currentUser?._id;
+  console.log(currentUser);
   const navigate = useNavigate();
   const token =
     JSON.parse(localStorage.getItem("token")) || localStorage.getItem("token");
@@ -94,7 +94,7 @@ const SingleBlog = () => {
   useEffect(() => {
     fetchSinglePost(id);
     window.scrollTo(0, 0);
-  }, []);
+  }, [id]);
 
   return (
     <div
@@ -230,7 +230,6 @@ const SingleBlog = () => {
           <Sidebar />
         </div>
       </div>
-      <Relavent id={id} />
     </div>
   );
 };

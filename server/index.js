@@ -8,6 +8,7 @@ const path = require("path");
 const { categoryRouter } = require("./routes/categoryRoutes");
 const bodyParse = require("body-parser");
 const { subscribeToNewsletter } = require("./helper/mailchimpAPI");
+const { contactRouter } = require("./routes/contactRoute");
 
 const app = express();
 app.use(express.json());
@@ -53,3 +54,4 @@ connectDB();
 app.use("/api", userRouter);
 app.use("/api", postRouter);
 app.use("/api", categoryRouter);
+app.use("/api", contactRouter);

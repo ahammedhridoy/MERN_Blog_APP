@@ -38,11 +38,12 @@
   width: 50px;
   object-fit: cover;
   height: 50px;
+  border-radius: 50%;
 }
 .comment-details p {
   color: var(--other-text-color);
   font-size: 14px;
-  margin-top: 25px;
+  margin-top: 5px;
 }
 
 .reply {

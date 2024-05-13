@@ -1,14 +1,18 @@
 /* eslint-disable react/prop-types */
+import { useContext } from "react";
 import "./Post.css";
-import { FcLikePlaceholder } from "react-icons/fc";
+import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 // import { FcLike } from "react-icons/fc";
 import { LiaCommentSolid } from "react-icons/lia";
 import { Link } from "react-router-dom";
+import { GlobalContext } from "../../context/GlobalContext";
 
 const Post = ({ post }) => {
   const { title, description, category, author, like, comments, updatedAt } =
     post;
-
+  const { sendLike } = useContext(GlobalContext);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?._id;
   // Function to format date
   const formatDate = (dateString) => {
     const [datePart] = dateString.split("T");
@@ -56,13 +60,19 @@ const Post = ({ post }) => {
           </div>
           <div className="post-details">
             <div className="post-likes">
-              <FcLikePlaceholder className="like" />
-              {/* <FcLike className="like" /> */}
-              <span>{like?.length || 0}</span>
+              {post?.likes?.includes(userId) ? (
+                <FcLike className="like" onClick={() => sendLike(post?._id)} />
+              ) : (
+                <FcLikePlaceholder
+                  className="latest-like"
+                  onClick={() => sendLike(post?._id)}
+                />
+              )}
+              <span>{post?.likes?.length || 0}</span>
             </div>
             <div className="post-comments">
-              <LiaCommentSolid className="dislike" />
-              <span>{comments?.length || 0}</span>
+              <LiaCommentSolid className="latest-dislike" />
+              <span>{post?.comments?.length || 0}</span>
             </div>
           </div>
         </div>

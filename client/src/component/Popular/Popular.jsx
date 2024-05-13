@@ -1,18 +1,22 @@
 import "./Popular.css";
 import { LiaCommentSolid } from "react-icons/lia";
-import { FcLikePlaceholder } from "react-icons/fc";
+import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 import { Link } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { GlobalContext } from "../../context/GlobalContext";
 import Loading from "../Loading/Loading";
 
 const Popular = () => {
-  const { posts, loading, fetchPosts } = useContext(GlobalContext);
+  const { posts, loading, sendLike } = useContext(GlobalContext);
   const [visiblePosts, setVisiblePosts] = useState(6);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?._id;
 
-  // useEffect(() => {
-  //   fetchPosts();
-  // }, []);
+  // Sort posts based on the number of likes in descending order
+  const sortedPosts = posts.sort((a, b) => b.likes.length - a.likes.length);
+
+  // Filter posts to include only those with at least one like
+  const filteredPosts = sortedPosts.filter((post) => post.likes.length > 0);
 
   // Function to format date
   const formatDate = (dateString) => {
@@ -36,7 +40,7 @@ const Popular = () => {
           {loading ? (
             <Loading />
           ) : (
-            posts.slice(0, visiblePosts).map((post) => (
+            filteredPosts.slice(0, visiblePosts).map((post) => (
               <div className="popular-post-card" key={post._id}>
                 <div className="popular-post-left">
                   <img
@@ -72,12 +76,21 @@ const Popular = () => {
                     </div>
                     <div className="popular-post-likes-comments">
                       <div className="popular-post-likes">
-                        <FcLikePlaceholder className="popular-like" />
-                        {/* <FcLike className="like" /> */}
-                        <span>{post?.like?.length || 0}</span>
+                        {post?.likes?.includes(userId) ? (
+                          <FcLike
+                            className="like"
+                            onClick={() => sendLike(post?._id)}
+                          />
+                        ) : (
+                          <FcLikePlaceholder
+                            className="latest-like"
+                            onClick={() => sendLike(post?._id)}
+                          />
+                        )}
+                        <span>{post?.likes?.length || 0}</span>
                       </div>
                       <div className="popular-post-comments">
-                        <LiaCommentSolid className="popular-dislike" />
+                        <LiaCommentSolid className="latest-dislike" />
                         <span>{post?.comments?.length || 0}</span>
                       </div>
                     </div>

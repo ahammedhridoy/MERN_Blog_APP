@@ -32,60 +32,6 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="container">
         <div className="popular-title">Sidebar</div>
-        {/* post */}
-
-        {loading ? (
-          <Loading />
-        ) : (
-          <div>
-            {posts.slice(0, editVisiblePosts).map((post) => (
-              <div className="popular-post-card" key={post._id}>
-                <div className="popular-post-left">
-                  <img
-                    className="popular-post-img"
-                    src={`http://localhost:3000/uploads/${post?.thumbnail}`}
-                    alt=""
-                  />
-                  <div className="popular-post-cat">
-                    <Link to={`/category/${post?.category}`} className="link">
-                      <div className="badge">{post?.category}</div>
-                    </Link>
-                  </div>
-                </div>
-
-                <div className="popular-post-details">
-                  <div className="popular-post-title">
-                    <Link to={`/post/${post?._id}`} className="link">
-                      <h4>{post?.title}</h4>
-                    </Link>
-                  </div>
-                  <div className="popular-post-container">
-                    <div className="popular-post-author">
-                      <div className="popular-author-info">
-                        <img
-                          src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
-                          alt=""
-                        />
-                        <h4>
-                          <b>{post?.author?.username}</b>
-                        </h4>
-                      </div>
-                      <p>{formatDate(post.updatedAt)}</p>
-                    </div>
-                  </div>
-                  <div className="popular-post-desc">
-                    <p
-                      className="truncate"
-                      dangerouslySetInnerHTML={{ __html: post?.description }}
-                    ></p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        <hr style={{ margin: "20px 0" }} />
 
         {/* 2nd post section */}
         {loading ? (

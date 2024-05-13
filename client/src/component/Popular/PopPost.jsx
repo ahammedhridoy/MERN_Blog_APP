@@ -1,9 +1,12 @@
+import { useContext } from "react";
 import "./PopPost.css";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { LiaCommentSolid } from "react-icons/lia";
 import { Link } from "react-router-dom";
+import { GlobalContext } from "../../context/GlobalContext";
 
 const PopPost = () => {
+  const { posts, sendLike } = useContext(GlobalContext);
   return (
     <>
       <div className="pop-post-card">

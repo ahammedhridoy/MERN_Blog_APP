@@ -159,7 +159,7 @@ const editPost = async (req, res) => {
     if (title) updateData.title = title;
     if (description) updateData.description = description;
     if (category) updateData.category = category;
-    if (fileUrl) updateData.thumbnail = fileUrl;
+    if (fileUrl) updateData.thumbnail = fileUrl || post.thumbnail;
 
     const updatedPost = await postModel.findByIdAndUpdate(id, updateData, {
       new: true,

@@ -18,10 +18,16 @@ const UpdatePost = () => {
   const token = JSON.parse(localStorage.getItem("token"));
   const { currentUser } = useContext(AuthContext);
   const [setLoading] = useState(true);
+  const [single, setSingle] = useState({});
   const { id } = useParams();
   const navigate = useNavigate();
 
-  //   Check if user is logged in
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setThumbnail(e.target.files[0]);
+    }
+  };
+  //Check if user is logged in
   useEffect(() => {
     if (!currentUser) {
       navigate("/login");
@@ -77,17 +83,17 @@ const UpdatePost = () => {
       }
     };
     fetchUser();
-  }, []);
+  }, [BASE_URL, setUser, currentUser, navigate]);
 
   // Single post
   useEffect(() => {
     const fetchSinglePost = async () => {
       try {
-        const { data } = await axios.get(`${BASE_URL}/post/single/${id}`);
-        await setSinglePost(data);
-        setTitle(data.title);
-        setDescription(data.description);
-        setCategory(data.category);
+        const res = await axios.get(`${BASE_URL}/post/single/${id}`);
+        setSingle(res?.data);
+        setTitle(res?.data?.title);
+        setCategory(res?.data?.category);
+        setDescription(res?.data?.description);
       } catch (error) {
         console.error("Error fetching posts:", error);
       } finally {
@@ -95,56 +101,46 @@ const UpdatePost = () => {
       }
     };
     fetchSinglePost();
-  }, []);
+  }, [BASE_URL, setSinglePost, id, setLoading]);
 
   // update post
-  const updatePostFunc = async (e) => {
+  const updatePost = async (e) => {
     e.preventDefault();
     try {
       if (!title || !category || !description) {
         toast.error("All fields are required");
         return;
       }
-
       const formData = new FormData();
       formData.append("title", title);
       formData.append("category", category);
       formData.append("description", description);
-      formData.append("thumbnail", thumbnail);
+      if (thumbnail) {
+        formData.append("thumbnail", thumbnail);
+      } else {
+        formData.append("thumbnail", single?.thumbnail);
+      }
 
-      // Append thumbnail if it exists
-      // if (thumbnail) {
-      //   formData.append("thumbnail", thumbnail);
-      // }
-
-      const config = {
+      const res = await axios.patch(`${BASE_URL}/post/edit/${id}`, formData, {
+        withCredentials: true,
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
-      };
-
-      const res = await axios.patch(
-        `${BASE_URL}/post/edit/${id}`,
-        formData,
-        config
-      );
-
-      console.log(res?.data);
+      });
 
       if (res?.data?.updatedPost) {
-        setTitle("");
-        setThumbnail(null);
-        setDescription("");
         toast.success("Post updated successfully");
-      } else {
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 2000);
+      }
+      if (res?.status !== 200) {
         toast.error("Error updating post");
       }
-
       fetchPosts();
     } catch (error) {
       console.log(error);
-      toast.error("Error updating post");
     }
   };
 
@@ -154,11 +150,7 @@ const UpdatePost = () => {
         <Toaster position="top-center" reverseOrder={false} />
         <h1 style={{ margin: "20px 0" }}>Update Post</h1>
 
-        <form
-          onSubmit={updatePostFunc}
-          encType="multipart/form-data"
-          method="post"
-        >
+        <form onSubmit={updatePost} encType="multipart/form-data" method="post">
           <input
             type="text"
             placeholder="Title"
@@ -172,31 +164,31 @@ const UpdatePost = () => {
               type="file"
               accept="image/*"
               name="thumbnail"
-              onChange={(e) => setThumbnail(e.target.files[0])}
+              onChange={handleFileChange}
             />
           </div>
-
-          {thumbnail ? (
-            <img
-              src={URL.createObjectURL(thumbnail)}
-              className="add-post-img"
-              alt=""
-            />
-          ) : (
-            <img
-              src={"http://localhost:3000/uploads/" + singlePost?.thumbnail}
-              className="add-post-img"
-              alt=""
-            />
-          )}
+          <img
+            src={
+              thumbnail
+                ? URL.createObjectURL(thumbnail)
+                : `http://localhost:3000/uploads/${singlePost?.thumbnail}`
+            }
+            className="add-post-img"
+            alt=""
+          />
           <select name="category" onChange={(e) => setCategory(e.target.value)}>
-            <option value="uncategorized">Uncategorized</option>
-            <option value="education">Education</option>
-            <option value="entertainment">Entertainment</option>
-            <option value="health">Health</option>
-            <option value="science">Science</option>
-            <option value="sports">Sports</option>
-            <option value="technology">Technology</option>
+            <option value={singlePost?.category}>{singlePost?.category}</option>
+            <option value="Uncategorized">Uncategorized</option>
+            <option value="Travel">Travel</option>
+            <option value="Food & Cooking">Food & Cooking</option>
+            <option value="Health & Wellness">Health & Wellness</option>
+            <option value="Fashion & Style">Fashion & Style</option>
+            <option value="Fitness & Exercise">Fitness & Exercise</option>
+            <option value="Technology">Technology</option>
+            <option value="Personal Finance">Personal Finance</option>
+            <option value="Home & Decor">Home & Decor</option>
+            <option value="Education & Learning">Education & Learning</option>
+            <option value="Sports & Media">Sports & Media</option>
           </select>
           <ReactQuill
             modules={modules}

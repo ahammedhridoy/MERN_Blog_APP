@@ -11,6 +11,7 @@ const Popular = () => {
   const [visiblePosts, setVisiblePosts] = useState(6);
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?._id;
+  const avatarUrl = `http://localhost:3000/uploads`;
 
   // Sort posts based on the number of likes in descending order
   const sortedPosts = posts.sort((a, b) => b.likes.length - a.likes.length);
@@ -64,10 +65,19 @@ const Popular = () => {
                   <div className="popular-post-container">
                     <div className="popular-post-author">
                       <div className="popular-author-info">
-                        <img
-                          src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
-                          alt=""
-                        />
+                        {post?.author?.avatar ? (
+                          <>
+                            <img
+                              src={`${avatarUrl}/${post?.author?.avatar}`}
+                              alt=""
+                            />
+                          </>
+                        ) : (
+                          <img
+                            src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
+                            alt=""
+                          />
+                        )}
                         <h4>
                           <b>{post?.author?.username}</b>
                         </h4>

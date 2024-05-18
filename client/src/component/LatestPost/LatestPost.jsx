@@ -12,6 +12,7 @@ const LatestPost = () => {
   const [visiblePosts, setVisiblePosts] = useState(5);
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?._id;
+  const avatarUrl = `http://localhost:3000/uploads`;
 
   // useEffect(() => {
   //   fetchPosts();
@@ -63,10 +64,19 @@ const LatestPost = () => {
                   <div className="latest-post-container">
                     <div className="latest-post-author">
                       <div className="latest-author-info">
-                        <img
-                          src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
-                          alt=""
-                        />
+                        {post?.author?.avatar ? (
+                          <>
+                            <img
+                              src={`${avatarUrl}/${post?.author?.avatar}`}
+                              alt=""
+                            />
+                          </>
+                        ) : (
+                          <img
+                            src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
+                            alt=""
+                          />
+                        )}
                         <h4>
                           <b>{post?.author?.username}</b>
                         </h4>

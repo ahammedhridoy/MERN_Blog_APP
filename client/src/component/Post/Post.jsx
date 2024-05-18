@@ -8,11 +8,11 @@ import { Link } from "react-router-dom";
 import { GlobalContext } from "../../context/GlobalContext";
 
 const Post = ({ post }) => {
-  const { title, description, category, author, like, comments, updatedAt } =
-    post;
+  const { title, description, category, author, updatedAt } = post;
   const { sendLike } = useContext(GlobalContext);
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?._id;
+  const avatarUrl = `http://localhost:3000/uploads`;
   // Function to format date
   const formatDate = (dateString) => {
     const [datePart] = dateString.split("T");
@@ -48,10 +48,16 @@ const Post = ({ post }) => {
           </div>
           <div className="post-container">
             <div className="author-info">
-              <img
-                src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
-                alt=""
-              />
+              {post?.author?.avatar ? (
+                <>
+                  <img src={`${avatarUrl}/${post?.author?.avatar}`} alt="" />
+                </>
+              ) : (
+                <img
+                  src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
+                  alt=""
+                />
+              )}
               <h4>
                 <b>{author?.username}</b>
               </h4>

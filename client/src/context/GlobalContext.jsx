@@ -94,6 +94,7 @@ export const GlobalContextProvider = ({ children }) => {
 
   useEffect(() => {
     fetchPosts();
+    // fetchSinglePost();
   }, []);
 
   return (

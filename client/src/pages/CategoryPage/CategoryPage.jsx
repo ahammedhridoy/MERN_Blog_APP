@@ -2,7 +2,7 @@ import Sidebar from "../../component/Sidebar/Sidebar";
 import "./CategoryPage.css";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
-import { FcLikePlaceholder } from "react-icons/fc";
+import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 import { LiaCommentSolid } from "react-icons/lia";
 import { useContext, useEffect, useState } from "react";
 import Banner from "./../../component/Banner/Banner";
@@ -12,7 +12,9 @@ const CategoryPage = () => {
   const [visiblePosts, setVisiblePosts] = useState(10);
   const [categoryPost, setCategoryPost] = useState([]);
   const { category } = useParams();
-  const { BASE_URL } = useContext(GlobalContext);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?._id;
+  const { BASE_URL, sendLike } = useContext(GlobalContext);
   // Category post
   useEffect(() => {
     const getCategoryPost = async () => {
@@ -89,10 +91,19 @@ const CategoryPage = () => {
                       <p>{formatDate(post?.updatedAt)}</p>
                     </div>
                     <div className="post-details">
-                      <div className="post-likes">
-                        <FcLikePlaceholder className="like" />
-                        {/* <FcLike className="like" /> */}
-                        <span>{post?.like?.length || 0}</span>
+                      <div className="latest-post-likes">
+                        {post?.likes?.includes(userId) ? (
+                          <FcLike
+                            className="like"
+                            onClick={() => sendLike(post?._id)}
+                          />
+                        ) : (
+                          <FcLikePlaceholder
+                            className="latest-like"
+                            onClick={() => sendLike(post?._id)}
+                          />
+                        )}
+                        <span>{post?.likes?.length || 0}</span>
                       </div>
                       <div className="post-comments">
                         <LiaCommentSolid className="dislike" />

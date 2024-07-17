@@ -11,13 +11,13 @@ const { contactRouter } = require("./routes/contactRoute");
 
 const app = express();
 app.use(express.json());
-const corsOptions = {
-  origin: ["https://mern-blog-app-frontend-iv8d00726.vercel.app"],
-  credentials: true,
-  optionSuccessStatus: 200,
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: ["https://mern-blog-app-frontend-iv8d00726.vercel.app"],
+//   credentials: true,
+//   optionSuccessStatus: 200,
+//   allowedHeaders: ["Content-Type", "Authorization"],
+// };
+app.use(cors);
 app.use(bodyParse.urlencoded({ extended: true }));
 
 // Serve static files from the 'server/uploads' folder

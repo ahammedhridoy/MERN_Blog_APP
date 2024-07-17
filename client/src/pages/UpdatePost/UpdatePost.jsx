@@ -171,7 +171,7 @@ const UpdatePost = () => {
             src={
               thumbnail
                 ? URL.createObjectURL(thumbnail)
-                : `http://localhost:3000/uploads/${singlePost?.thumbnail}`
+                : `https://mern-blog-app-server-eta.vercel.app/uploads/${singlePost?.thumbnail}`
             }
             className="add-post-img"
             alt=""

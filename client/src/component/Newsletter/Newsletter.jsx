@@ -6,7 +6,7 @@ const Newsletter = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const BASE_URL = "http://localhost:3000";
+  const BASE_URL = "https://mern-blog-app-server-eta.vercel.app";
 
   const handleSubmit = async (e) => {
     e.preventDefault();

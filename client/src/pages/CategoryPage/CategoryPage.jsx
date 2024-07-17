@@ -56,7 +56,7 @@ const CategoryPage = () => {
                 <div className="post-card" key={post?._id}>
                   <Link to={"/"}>
                     <img
-                      src={`http://localhost:3000/uploads/${post?.thumbnail}`}
+                      src={`https://mern-blog-app-server-eta.vercel.app/uploads/${post?.thumbnail}`}
                       alt="Avatar"
                       style={{ width: "100%" }}
                     />

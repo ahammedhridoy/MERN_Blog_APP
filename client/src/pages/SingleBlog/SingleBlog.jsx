@@ -23,9 +23,9 @@ const SingleBlog = () => {
   } = useContext(GlobalContext);
 
   const { id } = useParams();
-  const imageUrl = `http://localhost:3000/uploads/${singlePost.thumbnail}`;
-  const avatarUrl = `http://localhost:3000/uploads/${singlePost?.author?.avatar}`;
-  const commentAvatarUrl = `http://localhost:3000/uploads`;
+  const imageUrl = `https://mern-blog-app-server-eta.vercel.app/uploads/${singlePost.thumbnail}`;
+  const avatarUrl = `https://mern-blog-app-server-eta.vercel.app/uploads/${singlePost?.author?.avatar}`;
+  const commentAvatarUrl = `https://mern-blog-app-server-eta.vercel.app/uploads`;
   const { currentUser, setUser } = useContext(AuthContext);
   const authorId = currentUser?._id;
   console.log(currentUser);

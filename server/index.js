@@ -12,7 +12,7 @@ const { contactRouter } = require("./routes/contactRoute");
 const app = express();
 app.use(express.json());
 const corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: ["https://mern-blog-app-frontend-iv8d00726.vercel.app"],
   credentials: true,
   optionSuccessStatus: 200,
   allowedHeaders: ["Content-Type", "Authorization"],

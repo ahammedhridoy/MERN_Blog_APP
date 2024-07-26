@@ -17,9 +17,13 @@ app.use(express.json());
 //   optionSuccessStatus: 200,
 //   allowedHeaders: ["Content-Type", "Authorization"],
 // };
-app.use(cors({
-  origin: 'https://mern-blog-app-frontend-eta.vercel.app'
-}));
+// dsd
+app.use(
+  cors({
+    origin: "https://mern-blog-app-frontend-eta.vercel.app",
+  })
+);
+
 app.use(bodyParse.urlencoded({ extended: true }));
 
 // Serve static files from the 'server/uploads' folder

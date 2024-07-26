@@ -132,7 +132,7 @@ const Profile = () => {
                 src={
                   user?.avatar === ""
                     ? "https://i.stack.imgur.com/l60Hf.png"
-                    : "https://mern-blog-app-server-eta.vercel.app/uploads/" +
+                    : "https://mern-blog-app-backend-jet.vercel.app/uploads/" +
                       user?.avatar
                 }
                 alt="avatar"

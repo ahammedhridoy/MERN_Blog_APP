@@ -9,7 +9,7 @@ export const GlobalContext = createContext();
 export const GlobalContextProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
   const [singlePost, setSinglePost] = useState([]);
-  const BASE_URL = "https://mern-blog-app-server-eta.vercel.app/api";
+  const BASE_URL = "https://mern-blog-app-backend-jet.vercel.app/api";
   const [loading, setLoading] = useState(true);
   const token = JSON.parse(localStorage.getItem("token"));
   const [comment, setComment] = useState("");

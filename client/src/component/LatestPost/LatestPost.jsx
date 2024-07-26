@@ -12,7 +12,7 @@ const LatestPost = () => {
   const [visiblePosts, setVisiblePosts] = useState(5);
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?._id;
-  const avatarUrl = `https://mern-blog-app-server-eta.vercel.app/uploads`;
+  const avatarUrl = `https://mern-blog-app-backend-jet.vercel.app/uploads`;
 
   // useEffect(() => {
   //   fetchPosts();
@@ -45,7 +45,7 @@ const LatestPost = () => {
                 <div className="latest-post-left">
                   <img
                     className="latest-post-img"
-                    src={`https://mern-blog-app-server-eta.vercel.app/uploads/${post?.thumbnail}`}
+                    src={`https://mern-blog-app-backend-jet.vercel.app/uploads/${post?.thumbnail}`}
                     alt=""
                   />
                   <div className="latest-post-cat">

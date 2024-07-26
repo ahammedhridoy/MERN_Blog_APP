@@ -12,7 +12,7 @@ const Post = ({ post }) => {
   const { sendLike } = useContext(GlobalContext);
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?._id;
-  const avatarUrl = `https://mern-blog-app-server-eta.vercel.app/uploads`;
+  const avatarUrl = `https://mern-blog-app-backend-jet.vercel.app/uploads`;
   // Function to format date
   const formatDate = (dateString) => {
     const [datePart] = dateString.split("T");
@@ -24,7 +24,7 @@ const Post = ({ post }) => {
       <div className="post-card">
         <Link to={"/"}>
           <img
-            src={`https://mern-blog-app-server-eta.vercel.app/uploads/${post?.thumbnail}`}
+            src={`https://mern-blog-app-backend-jet.vercel.app/uploads/${post?.thumbnail}`}
             alt="Avatar"
             style={{ width: "100%" }}
           />

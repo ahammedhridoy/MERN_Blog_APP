@@ -44,7 +44,7 @@ const Sidebar = () => {
                   <img
                     className="latest-post-img"
                     style={{ width: "150px", height: "100px" }}
-                    src={`https://mern-blog-app-server-eta.vercel.app/uploads/${post?.thumbnail}`}
+                    src={`https://mern-blog-app-backend-jet.vercel.app/uploads/${post?.thumbnail}`}
                     alt=""
                   />
                 </div>

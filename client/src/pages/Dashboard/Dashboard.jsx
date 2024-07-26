@@ -47,7 +47,7 @@ const Dashboard = () => {
             <div className="my-posts-item-wrap" key={post._id}>
               <div className="post-item-left">
                 <img
-                  src={`https://mern-blog-app-server-eta.vercel.app/uploads/${post?.thumbnail}`}
+                  src={`https://mern-blog-app-backend-jet.vercel.app/uploads/${post?.thumbnail}`}
                   alt="Thumbnail"
                   style={{ width: "100%" }}
                 />

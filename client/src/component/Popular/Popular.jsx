@@ -11,7 +11,7 @@ const Popular = () => {
   const [visiblePosts, setVisiblePosts] = useState(6);
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?._id;
-  const avatarUrl = `https://mern-blog-app-server-eta.vercel.app/uploads`;
+  const avatarUrl = `https://mern-blog-app-backend-jet.vercel.app/uploads`;
 
   // Sort posts based on the number of likes in descending order
   const sortedPosts = posts.sort((a, b) => b.likes.length - a.likes.length);
@@ -46,7 +46,7 @@ const Popular = () => {
                 <div className="popular-post-left">
                   <img
                     className="popular-post-img"
-                    src={`https://mern-blog-app-server-eta.vercel.app/uploads/${post?.thumbnail}`}
+                    src={`https://mern-blog-app-backend-jet.vercel.app/uploads/${post?.thumbnail}`}
                     alt=""
                   />
                   <div className="popular-post-cat">

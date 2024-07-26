@@ -11,18 +11,11 @@ const { contactRouter } = require("./routes/contactRoute");
 
 const app = express();
 app.use(express.json());
-// const corsOptions = {
-//   origin: ["https://mern-blog-app-frontend-iv8d00726.vercel.app"],
-//   credentials: true,
-//   optionSuccessStatus: 200,
-//   allowedHeaders: ["Content-Type", "Authorization"],
-// };
-// dsd
-app.use(
-  cors({
-    origin: "https://mern-blog-app-frontend-eta.vercel.app",
-  })
-);
+app.use(cors({
+  origin: 'https://mern-blog-app-frontend-eta.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+}));
 
 app.use(bodyParse.urlencoded({ extended: true }));
 
